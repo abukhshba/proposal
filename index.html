@@ -98,6 +98,19 @@
             backface-visibility: hidden;
         }
 
+        /* Keep normal animation speeds - removed forced speed changes */
+
+        /* GPU acceleration for smooth scrolling */
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Optimize images and videos */
+        img, video {
+            image-rendering: -webkit-optimize-contrast;
+        }
+
         /* Ensure video section starts at top on load */
         body.page-loaded {
             scroll-behavior: auto;
@@ -1302,7 +1315,7 @@
         box-shadow: 0 4px 30px rgba(56, 60, 184, 0.3),
                     0 0 60px rgba(240, 231, 72, 0.2);
         transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        /*border-bottom: 2px solid rgba(255, 255, 255, 0.2);*/
     }
 
     @keyframes navbar-gradient-flow {
@@ -1571,138 +1584,6 @@
     }
 </style>
 
-<!-- Video Hero Section -->
-<section class="video-hero-section relative w-full overflow-hidden" id="video-section">
-    <!-- Background Video -->
-    <video class="video-background" autoplay muted loop playsinline>
-        <source src="video.mp4" type="video/mp4" >
-        Your browser does not support the video tag.
-    </video>
-
-    <style>
-        .video-hero-section {
-            position: relative;
-            width: 100%;
-            height: 90vh;
-            overflow: hidden;
-        }
-
-        .video-background {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
-            z-index: 1;
-        }
-
-        .video-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(56, 60, 184, 0.6) 0%, rgba(240, 231, 72, 0.4) 100%);
-            z-index: 2;
-        }
-
-        .video-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            z-index: 3;
-            color: white;
-        }
-
-        .video-title {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #f0e748 0%, #ffffff 50%, #f0e748 100%);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: video-title-glow 3s ease infinite;
-            filter: drop-shadow(0 0 30px rgba(240, 231, 72, 0.8));
-        }
-
-        .video-subtitle {
-            font-size: 1.3rem;
-            font-weight: 300;
-            opacity: 0;
-            animation: fade-in-up 1s ease 0.5s forwards;
-        }
-
-        .scroll-down-indicator {
-            position: absolute;
-            bottom: -150px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            animation: bounce-scroll 2s ease-in-out infinite;
-        }
-
-        .scroll-arrow {
-            animation: arrow-bounce 2s ease-in-out infinite;
-        }
-
-        .scroll-text {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            opacity: 0.8;
-        }
-
-        @keyframes video-title-glow {
-            0%, 100% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-        }
-
-        @keyframes fade-in-up {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 0.9;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes bounce-scroll {
-            0%, 100% {
-                transform: translateX(-50%) translateY(0);
-            }
-            50% {
-                transform: translateX(-50%) translateY(15px);
-            }
-        }
-
-        @keyframes arrow-bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(10px);
-            }
-        }
-    </style>
-</section>
-
 <!-- Hero Section - Based on Your Design Image -->
 <section class="min-h-screen flex items-center justify-center relative overflow-hidden" id="hero-section" style="background: linear-gradient(135deg, #383cb8 0%, #5b5fd4 30%, #7e82e0 60%, #a1a4ec 80%, #f0e748 100%);">
 
@@ -1738,7 +1619,7 @@
             background: linear-gradient(135deg, #383cb8 0%, #5b5fd4 50%, #7e82e0 100%);
             top: -10%;
             left: -15%;
-            animation: blob-morph-left 20s ease-in-out infinite;
+            /* animation: blob-morph-left 20s ease-in-out infinite; DISABLED FOR PERFORMANCE */
             box-shadow: 0 0 100px rgba(56, 60, 184, 0.6), 0 0 200px rgba(91, 95, 212, 0.4);
         }
 
@@ -1748,7 +1629,7 @@
             background: linear-gradient(135deg, #f0e748 0%, #ece89e 50%, #f0e748 100%);
             top: 10%;
             right: -20%;
-            animation: blob-morph-right 25s ease-in-out infinite;
+            /* animation: blob-morph-right 25s ease-in-out infinite; DISABLED FOR PERFORMANCE */
             box-shadow: 0 0 120px rgba(240, 231, 72, 0.7), 0 0 240px rgba(240, 231, 72, 0.5);
         }
 
@@ -1886,7 +1767,7 @@
         .floating-shape {
             position: absolute;
             opacity: 0.3;
-            animation: shape-float 15s ease-in-out infinite;
+            /* animation: shape-float 15s ease-in-out infinite; DISABLED FOR PERFORMANCE */
         }
 
         .shape-circle {
@@ -1896,7 +1777,7 @@
             border-radius: 50%;
             top: 20%;
             left: 10%;
-            animation: shape-float 12s ease-in-out infinite, shape-rotate 20s linear infinite;
+            /* animation: shape-float 12s ease-in-out infinite, shape-rotate 20s linear infinite; DISABLED FOR PERFORMANCE */
             box-shadow: 0 0 30px rgba(240, 231, 72, 0.5);
         }
 
@@ -1906,7 +1787,7 @@
             border: 3px solid #383cb8;
             top: 60%;
             right: 15%;
-            animation: shape-float 14s ease-in-out infinite 1s, shape-rotate-reverse 18s linear infinite;
+            /* animation: shape-float 14s ease-in-out infinite 1s, shape-rotate-reverse 18s linear infinite; DISABLED FOR PERFORMANCE */
             box-shadow: 0 0 30px rgba(56, 60, 184, 0.5);
         }
 
@@ -1918,7 +1799,7 @@
             border-bottom: 70px solid #7e82e0;
             top: 40%;
             left: 80%;
-            animation: shape-float 16s ease-in-out infinite 2s, shape-rotate 25s linear infinite;
+            /* animation: shape-float 16s ease-in-out infinite 2s, shape-rotate 25s linear infinite; DISABLED FOR PERFORMANCE */
             filter: drop-shadow(0 0 20px rgba(126, 130, 224, 0.5));
         }
 
@@ -1931,7 +1812,7 @@
             position: relative;
             top: 70%;
             left: 25%;
-            animation: shape-float 13s ease-in-out infinite 3s, shape-rotate-reverse 22s linear infinite;
+            /* animation: shape-float 13s ease-in-out infinite 3s, shape-rotate-reverse 22s linear infinite; DISABLED FOR PERFORMANCE */
         }
 
         .shape-hexagon::before,
@@ -1963,7 +1844,7 @@
             position: relative;
             top: 15%;
             right: 20%;
-            animation: shape-float 17s ease-in-out infinite 4s, shape-pulse 3s ease-in-out infinite;
+            /* animation: shape-float 17s ease-in-out infinite 4s, shape-pulse 3s ease-in-out infinite; DISABLED FOR PERFORMANCE */
             filter: drop-shadow(0 0 25px rgba(91, 95, 212, 0.6));
         }
 
@@ -2412,7 +2293,7 @@
         console.log('Downloading proposal...');
     }
 
-    // ===== LOADER - MUST RUN FIRST (OPTIMIZED) =====
+    // ===== LOADER - MUST RUN FIRST =====
     (function() {
         const loader = document.getElementById('loader');
         if (loader) {
@@ -2421,8 +2302,8 @@
                 loader.style.visibility = 'hidden';
                 setTimeout(function() {
                     loader.style.display = 'none';
-                }, 400);
-            }, 1500); // Reduced from 3000ms to 1500ms for faster loading
+                }, 800);
+            }, 3000); // Normal 3 second loader
         }
     })();
 
@@ -2432,7 +2313,7 @@
         if (!bubblesContainer) return;
 
         const colors = ['bubble-yellow', 'bubble-blue', 'bubble-gradient'];
-        const bubbleCount = 8; // Reduced from 30 for better performance
+        const bubbleCount = 5; // Reduced from 30 to 5 for maximum performance
 
         function createBubble() {
             const bubble = document.createElement('div');
@@ -2770,7 +2651,7 @@
     // ===== Loader - Start Hero Animations (OPTIMIZED) =====
     setTimeout(() => {
         startHeroAnimations();
-    }, 2000); // Reduced from 3800ms to 2000ms for faster loading
+    }, 1000); // Reduced from 3800ms to 1000ms for maximum speed
 
     // ===== Network Canvas Animation (DISABLED FOR PERFORMANCE) =====
     // Disabled to improve page performance and scrolling speed
@@ -2830,7 +2711,7 @@
     // ===== Hero Particles Animation - BRAND COLORS EDITION (OPTIMIZED) =====
     function createParticles() {
         const particlesContainer = document.getElementById('particles-container');
-        const particleCount = 30; // Reduced from 120 for better performance
+        const particleCount = 15; // Reduced from 120 to 15 for maximum performance
 
         for (let i = 0; i < particleCount; i++) {
             const particle = document.createElement('div');

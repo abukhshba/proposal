@@ -87,6 +87,17 @@
             padding: 0;
         }
 
+        /* Performance Optimizations */
+        * {
+            will-change: auto !important;
+        }
+
+        .bubble, .particle, .gradient-orb, .geometric-shape {
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
         /* Ensure video section starts at top on load */
         body.page-loaded {
             scroll-behavior: auto;
@@ -1226,7 +1237,7 @@
 
 <!-- Navigation Bar -->
 <nav class="navbar-brand relative z-50" id="main-navbar">
-    <div class="container mx-auto px-6 md:px-16 py-4">
+    <div class="container mx-auto px-6 md:px-16 md:py-4 py-1">
         <div class="flex items-center justify-between">
             <!-- Logo -->
             <a href="#" class="flex items-center gap-3 group">
@@ -1247,14 +1258,10 @@
                     <span>Expertise</span>
                     <div class="nav-link-underline"></div>
                 </a>
-                <a href="#testimonials" class="nav-link-brand">
-                    <span>Testimonials</span>
-                    <div class="nav-link-underline"></div>
-                </a>
-                <a href="#contact" class="cta-btn-brand">
+                <button onclick="downloadProposal()" class="cta-btn-brand">
                     <span class="cta-btn-text">Get Started</span>
                     <div class="cta-btn-glow"></div>
-                </a>
+                </button>
             </div>
 
             <!-- Mobile Menu Button -->
@@ -1267,13 +1274,12 @@
 
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="mobile-menu-brand md:hidden">
-            <div class="flex flex-col gap-4 pt-4 pb-2">
+            <div class="flex flex-col gap-4 pt-2 pb-2">
                 <a href="#hero-section" class="mobile-nav-link">Proposal</a>
                 <a href="#skills" class="mobile-nav-link">Expertise</a>
-                <a href="#testimonials" class="mobile-nav-link">Testimonials</a>
-                <a href="#contact" class="mobile-cta-btn">
+                <button onclick="downloadProposal()" class="mobile-cta-btn">
                     Get Started
-                </a>
+                </button>
             </div>
         </div>
     </div>
@@ -1426,6 +1432,8 @@
                     0 0 30px rgba(240, 231, 72, 0.2);
         border: 2px solid rgba(56, 60, 184, 0.3);
         animation: cta-pulse 3s ease infinite;
+        cursor: pointer;
+        font-family: 'Inter', sans-serif;
     }
 
     @keyframes cta-pulse {
@@ -1544,6 +1552,10 @@
         display: block;
         transition: all 0.3s ease;
         box-shadow: 0 4px 20px rgba(240, 231, 72, 0.4);
+        border: 2px solid rgba(56, 60, 184, 0.3);
+        cursor: pointer;
+        font-family: 'Inter', sans-serif;
+        width: 100%;
     }
 
     .mobile-cta-btn:hover {
@@ -1726,7 +1738,7 @@
             background: linear-gradient(135deg, #383cb8 0%, #5b5fd4 50%, #7e82e0 100%);
             top: -10%;
             left: -15%;
-            animation: blob-morph-left 20s ease-in-out infinite, blob-float 8s ease-in-out infinite, blob-glow-blue 4s ease-in-out infinite;
+            animation: blob-morph-left 20s ease-in-out infinite;
             box-shadow: 0 0 100px rgba(56, 60, 184, 0.6), 0 0 200px rgba(91, 95, 212, 0.4);
         }
 
@@ -1736,7 +1748,7 @@
             background: linear-gradient(135deg, #f0e748 0%, #ece89e 50%, #f0e748 100%);
             top: 10%;
             right: -20%;
-            animation: blob-morph-right 25s ease-in-out infinite, blob-float-reverse 10s ease-in-out infinite, blob-glow-yellow 4s ease-in-out infinite;
+            animation: blob-morph-right 25s ease-in-out infinite;
             box-shadow: 0 0 120px rgba(240, 231, 72, 0.7), 0 0 240px rgba(240, 231, 72, 0.5);
         }
 
@@ -2400,7 +2412,7 @@
         console.log('Downloading proposal...');
     }
 
-    // ===== LOADER - MUST RUN FIRST =====
+    // ===== LOADER - MUST RUN FIRST (OPTIMIZED) =====
     (function() {
         const loader = document.getElementById('loader');
         if (loader) {
@@ -2409,8 +2421,8 @@
                 loader.style.visibility = 'hidden';
                 setTimeout(function() {
                     loader.style.display = 'none';
-                }, 800);
-            }, 3000);
+                }, 400);
+            }, 1500); // Reduced from 3000ms to 1500ms for faster loading
         }
     })();
 
@@ -2420,7 +2432,7 @@
         if (!bubblesContainer) return;
 
         const colors = ['bubble-yellow', 'bubble-blue', 'bubble-gradient'];
-        const bubbleCount = 30;
+        const bubbleCount = 8; // Reduced from 30 for better performance
 
         function createBubble() {
             const bubble = document.createElement('div');
@@ -2636,7 +2648,7 @@
     }
 
     function createConfetti() {
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 50; i++) { // Reduced from 100 for better performance
             confettiParticles.push(new Confetti());
         }
     }
@@ -2755,159 +2767,22 @@
         confettiParticles = [];
     }
 
-    // ===== Loader - Start Hero Animations =====
+    // ===== Loader - Start Hero Animations (OPTIMIZED) =====
     setTimeout(() => {
         startHeroAnimations();
-    }, 3800);
+    }, 2000); // Reduced from 3800ms to 2000ms for faster loading
 
-    // ===== Network Canvas Animation =====
-    const networkCanvas = document.getElementById('network-canvas');
-    if (networkCanvas) {
-        const ctx = networkCanvas.getContext('2d');
-        let particles = [];
-        let animationId;
+    // ===== Network Canvas Animation (DISABLED FOR PERFORMANCE) =====
+    // Disabled to improve page performance and scrolling speed
 
-        function resizeCanvas() {
-            networkCanvas.width = networkCanvas.offsetWidth;
-            networkCanvas.height = networkCanvas.offsetHeight;
-        }
+    // ===== Spotlight Effect (DISABLED FOR PERFORMANCE) =====
+    // Disabled to improve scrolling performance
 
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
+    // ===== Parallax Effect for Orbs and Shapes (DISABLED FOR PERFORMANCE) =====
+    // Disabled to improve scrolling performance
 
-        class NetworkParticle {
-            constructor() {
-                this.x = Math.random() * networkCanvas.width;
-                this.y = Math.random() * networkCanvas.height;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
-                this.radius = Math.random() * 2 + 1;
-            }
-
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-
-                if (this.x < 0 || this.x > networkCanvas.width) this.vx *= -1;
-                if (this.y < 0 || this.y > networkCanvas.height) this.vy *= -1;
-            }
-
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-                ctx.fill();
-            }
-        }
-
-        // Create particles
-        for (let i = 0; i < 50; i++) {
-            particles.push(new NetworkParticle());
-        }
-
-        function drawConnections() {
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance < 150) {
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.2 * (1 - distance / 150)})`;
-                        ctx.lineWidth = 1;
-                        ctx.stroke();
-                    }
-                }
-            }
-        }
-
-        function animateNetwork() {
-            ctx.clearRect(0, 0, networkCanvas.width, networkCanvas.height);
-
-            particles.forEach(particle => {
-                particle.update();
-                particle.draw();
-            });
-
-            drawConnections();
-
-            animationId = requestAnimationFrame(animateNetwork);
-        }
-
-        animateNetwork();
-    }
-
-    // ===== Spotlight Effect =====
-    const spotlight = document.querySelector('.spotlight');
-    const heroSection = document.getElementById('hero-section');
-
-    if (spotlight && heroSection) {
-        heroSection.addEventListener('mousemove', (e) => {
-            const rect = heroSection.getBoundingClientRect();
-            const x = ((e.clientX - rect.left) / rect.width) * 100;
-            const y = ((e.clientY - rect.top) / rect.height) * 100;
-
-            spotlight.style.setProperty('--mouse-x', `${x}%`);
-            spotlight.style.setProperty('--mouse-y', `${y}%`);
-        });
-    }
-
-    // ===== Parallax Effect for Orbs and Shapes =====
-    const orbs = document.querySelectorAll('.orb');
-    const shapes = document.querySelectorAll('.shape');
-
-    if (heroSection) {
-        heroSection.addEventListener('mousemove', (e) => {
-            const { clientX, clientY } = e;
-            const { offsetWidth, offsetHeight } = heroSection;
-
-            const xPos = (clientX / offsetWidth - 0.5) * 2;
-            const yPos = (clientY / offsetHeight - 0.5) * 2;
-
-            orbs.forEach((orb, index) => {
-                const speed = (index + 1) * 0.02;
-                const x = xPos * speed * 50;
-                const y = yPos * speed * 50;
-                orb.style.transform = `translate(${x}px, ${y}px)`;
-            });
-
-            shapes.forEach((shape, index) => {
-                const speed = (index + 1) * 0.03;
-                const x = xPos * speed * 30;
-                const y = yPos * speed * 30;
-                shape.style.transform = `translate(${x}px, ${y}px) rotate(${xPos * 10}deg)`;
-            });
-        });
-
-        heroSection.addEventListener('mouseleave', () => {
-            orbs.forEach(orb => {
-                orb.style.transform = 'translate(0, 0)';
-            });
-            shapes.forEach(shape => {
-                shape.style.transform = 'translate(0, 0) rotate(0deg)';
-            });
-        });
-    }
-
-    // ===== Magnetic Button Effect =====
-    const magneticBtns = document.querySelectorAll('.cta-primary, .cta-secondary, .magnetic-btn');
-
-    magneticBtns.forEach(btn => {
-        btn.addEventListener('mousemove', (e) => {
-            const rect = btn.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-
-            btn.style.transform = `translate(${x * 0.4}px, ${y * 0.4}px) scale(1.1)`;
-        });
-
-        btn.addEventListener('mouseleave', () => {
-            btn.style.transform = 'translate(0, 0) scale(1)';
-        });
-    });
+    // ===== Magnetic Button Effect (DISABLED FOR PERFORMANCE) =====
+    // Disabled to improve scrolling performance
 
     // ===== Smooth Scroll with Easing =====
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -2923,60 +2798,39 @@
         });
     });
 
-    // ===== Scroll-based Animations =====
+    // ===== Scroll-based Animations (OPTIMIZED WITH THROTTLE) =====
     let lastScrollY = window.scrollY;
+    let ticking = false;
 
     window.addEventListener('scroll', () => {
-        const scrollY = window.scrollY;
-        const scrollDirection = scrollY > lastScrollY ? 'down' : 'up';
-        lastScrollY = scrollY;
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                const scrollY = window.scrollY;
+                const scrollDirection = scrollY > lastScrollY ? 'down' : 'up';
+                lastScrollY = scrollY;
 
-        // Parallax background on scroll
-        const heroGradient = document.querySelector('.hero-gradient');
-        if (heroGradient) {
-            heroGradient.style.transform = `translateY(${scrollY * 0.5}px)`;
+                // Parallax background on scroll (DISABLED FOR PERFORMANCE)
+                // const heroGradient = document.querySelector('.hero-gradient');
+                // if (heroGradient) {
+                //     heroGradient.style.transform = `translateY(${scrollY * 0.5}px)`;
+                // }
+
+                ticking = false;
+            });
+            ticking = true;
         }
-    });
+    }, { passive: true });
 
-    // ===== Cursor Trail Effect =====
-    const cursorTrail = [];
-    const trailLength = 10;
+    // ===== Cursor Trail Effect (DISABLED FOR PERFORMANCE) =====
+    // Disabled to improve scrolling performance
 
-    document.addEventListener('mousemove', (e) => {
-        cursorTrail.push({ x: e.clientX, y: e.clientY, time: Date.now() });
+    // ===== Stat Cards Tilt Effect (DISABLED FOR PERFORMANCE) =====
+    // Disabled to improve scrolling performance
 
-        if (cursorTrail.length > trailLength) {
-            cursorTrail.shift();
-        }
-    });
-
-    // ===== Stat Cards Tilt Effect =====
-    const statCards = document.querySelectorAll('.stat-card');
-
-    statCards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-
-            const rotateX = (y - centerY) / 10;
-            const rotateY = (centerX - x) / 10;
-
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.1)`;
-        });
-
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
-        });
-    });
-
-    // ===== Hero Particles Animation - BRAND COLORS EDITION =====
+    // ===== Hero Particles Animation - BRAND COLORS EDITION (OPTIMIZED) =====
     function createParticles() {
         const particlesContainer = document.getElementById('particles-container');
-        const particleCount = 120; // MASSIVE PARTICLE COUNT!
+        const particleCount = 30; // Reduced from 120 for better performance
 
         for (let i = 0; i < particleCount; i++) {
             const particle = document.createElement('div');

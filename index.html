@@ -2,8 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Marketing Agency Proposal - Your Vision, Amplified</title>
+
+    <!-- Performance Optimizations for Mobile -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="favicon.png">
@@ -143,6 +148,44 @@
         <div class="floating-dot dot-2"></div>
     </div>
 
+    <!-- NEW: Animated Floating Badges -->
+    <div class="floating-badges">
+        <div class="hero-badge badge-1">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+        </div>
+        <div class="hero-badge badge-2">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+        </div>
+        <div class="hero-badge badge-3">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+            </svg>
+        </div>
+        <div class="hero-badge badge-4">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+        </div>
+    </div>
+
+    <!-- NEW: Animated Connection Lines -->
+    <svg class="connection-lines" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+        <path class="connection-line line-1" d="M 100 200 Q 400 100 700 300" stroke="#f0e748" stroke-width="2" fill="none" opacity="0.3"/>
+        <path class="connection-line line-2" d="M 1800 300 Q 1500 200 1200 400" stroke="#383cb8" stroke-width="2" fill="none" opacity="0.3"/>
+        <path class="connection-line line-3" d="M 300 800 Q 600 700 900 900" stroke="#7e82e0" stroke-width="2" fill="none" opacity="0.3"/>
+    </svg>
+
+    <!-- NEW: Pulsing Circles -->
+    <div class="pulsing-circles">
+        <div class="pulse-circle circle-1"></div>
+        <div class="pulse-circle circle-2"></div>
+        <div class="pulse-circle circle-3"></div>
+    </div>
+
     <!-- Navigation Bar (Floating on top) -->
     <nav class="navbar-merged relative z-50" id="main-navbar">
         <div class="container mx-auto px-6 md:px-16 md:py-4 py-3">
@@ -234,7 +277,7 @@
     </div>
 
     <!-- Scroll Indicator with Enhanced Animation -->
-    <div class="scroll-indicator-hero">
+    <div class="scroll-indicator-hero" id="scroll-indicator" style="cursor: pointer;">
         <div class="scroll-mouse-hero">
             <div class="scroll-wheel-hero"></div>
         </div>

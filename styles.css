@@ -82,8 +82,19 @@
             background: linear-gradient(135deg, #383cb8 0%, #f0e748 100%);
         }
 
-        /* ===== ANDROID DEVICE OPTIMIZATIONS - AGGRESSIVE ===== */
+        /* ===== ANDROID DEVICE OPTIMIZATIONS - ULTRA AGGRESSIVE ===== */
         /* These optimizations ensure excellent performance on Samsung, Oppo, and all Android devices */
+
+        /* Force simple rendering on Android */
+        html.android-device,
+        body.android-device {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeSpeed !important;
+            image-rendering: -webkit-optimize-contrast !important;
+        }
+
+        /* Hide ALL decorative elements */
         body.android-device .blob-shape,
         body.android-device .orb,
         body.android-device .light-ray,
@@ -91,45 +102,71 @@
         body.android-device .animated-ring,
         body.android-device .floating-dot,
         body.android-device .floating-shape,
-        body.android-device .particle {
+        body.android-device .particle,
+        body.android-device .floating-badges,
+        body.android-device .connection-lines,
+        body.android-device .pulsing-circles {
             display: none !important;
         }
 
-        /* Remove ALL blur effects on Android for maximum performance */
-        body.android-device * {
+        /* Remove ALL animations, effects, shadows on Android for maximum performance */
+        body.android-device *,
+        html.android-device * {
+            animation: none !important;
+            transition: none !important;
             backdrop-filter: none !important;
             -webkit-backdrop-filter: none !important;
+            filter: none !important;
+            box-shadow: none !important;
+            text-shadow: none !important;
+            transform: none !important;
+            will-change: auto !important;
+            perspective: none !important;
+            transform-style: flat !important;
         }
 
         /* Static gradient on Android - no animation */
         body.android-device .hero-navbar-merged,
         body.android-device #hero-section {
-            animation: none !important;
-            background: linear-gradient(135deg, #383cb8 0%, #5b5fd4 25%, #7e82e0 50%, #f0e748 100%) !important;
+            background: linear-gradient(135deg, #383cb8 0%, #f0e748 100%) !important;
         }
 
-        /* Disable text shadows on Android */
-        body.android-device h1,
-        body.android-device h2,
-        body.android-device h3,
-        body.android-device h4,
-        body.android-device h5,
-        body.android-device h6,
-        body.android-device p,
-        body.android-device span,
-        body.android-device a,
-        body.android-device button {
-            text-shadow: none !important;
+        /* Simplify all cards on Android */
+        body.android-device .proposal-card,
+        body.android-device .skill-card,
+        body.android-device .service-card {
+            transform: none !important;
+            transition: none !important;
         }
 
-        /* Keep loader visible on Android - it needs blur to work */
+        /* Remove all pseudo-elements on Android */
+        body.android-device *::before,
+        body.android-device *::after {
+            display: none !important;
+        }
+
+        /* Keep loader visible on Android - it needs animations */
         body.android-device .loader-wrapper,
         body.android-device .loader-wrapper *,
         body.android-device .loader-bg-circle,
-        body.android-device .loader-ring {
+        body.android-device .loader-ring,
+        body.android-device .loader-logo {
             display: block !important;
             filter: revert !important;
             animation: revert !important;
+            transform: revert !important;
+        }
+
+        /* Keep essential button functionality */
+        body.android-device button,
+        body.android-device .btn,
+        body.android-device a {
+            transition: opacity 0.2s ease !important;
+        }
+
+        body.android-device button:active,
+        body.android-device .btn:active {
+            opacity: 0.7 !important;
         }
 
         /* ===== EMERGENCY MODE - For extremely low-end devices ===== */
@@ -148,6 +185,197 @@
         body.emergency-mode .loader-wrapper * {
             animation: revert !important;
             filter: revert !important;
+        }
+
+        /* ===== NEW HERO ANIMATIONS ===== */
+
+        /* Floating Badges */
+        .floating-badges {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 15;
+        }
+
+        .hero-badge {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            animation: float-badge 6s ease-in-out infinite;
+            will-change: transform;
+        }
+
+        .hero-badge svg {
+            filter: drop-shadow(0 0 8px currentColor);
+        }
+
+        .badge-1 {
+            top: 15%;
+            left: 10%;
+            animation-delay: 0s;
+            background: linear-gradient(135deg, rgba(240, 231, 72, 0.2), rgba(240, 231, 72, 0.05));
+            border-color: rgba(240, 231, 72, 0.4);
+            color: #f0e748;
+        }
+
+        .badge-2 {
+            top: 25%;
+            right: 15%;
+            animation-delay: 1.5s;
+            background: linear-gradient(135deg, rgba(56, 60, 184, 0.2), rgba(56, 60, 184, 0.05));
+            border-color: rgba(56, 60, 184, 0.4);
+            color: #7e82e0;
+        }
+
+        .badge-3 {
+            bottom: 30%;
+            left: 8%;
+            animation-delay: 3s;
+            background: linear-gradient(135deg, rgba(126, 130, 224, 0.2), rgba(126, 130, 224, 0.05));
+            border-color: rgba(126, 130, 224, 0.4);
+            color: #a1a4ec;
+        }
+
+        .badge-4 {
+            bottom: 20%;
+            right: 12%;
+            animation-delay: 4.5s;
+            background: linear-gradient(135deg, rgba(240, 231, 72, 0.2), rgba(240, 231, 72, 0.05));
+            border-color: rgba(240, 231, 72, 0.4);
+            color: #f0e748;
+        }
+
+        @keyframes float-badge {
+            0%, 100% {
+                transform: translateY(0px) translateX(0px) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-20px) translateX(10px) rotate(2deg);
+            }
+            50% {
+                transform: translateY(-10px) translateX(-10px) rotate(-2deg);
+            }
+            75% {
+                transform: translateY(-25px) translateX(5px) rotate(1deg);
+            }
+        }
+
+        /* Animated Connection Lines */
+        .connection-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+            opacity: 0.6;
+        }
+
+        .connection-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: draw-line 8s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px currentColor);
+        }
+
+        .line-1 {
+            animation-delay: 0s;
+        }
+
+        .line-2 {
+            animation-delay: 2.5s;
+        }
+
+        .line-3 {
+            animation-delay: 5s;
+        }
+
+        @keyframes draw-line {
+            0%, 100% {
+                stroke-dashoffset: 1000;
+                opacity: 0;
+            }
+            10%, 90% {
+                opacity: 0.6;
+            }
+            50% {
+                stroke-dashoffset: 0;
+                opacity: 0.8;
+            }
+        }
+
+        /* Pulsing Circles */
+        .pulsing-circles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 8;
+        }
+
+        .pulse-circle {
+            position: absolute;
+            border-radius: 50%;
+            border: 3px solid;
+            animation: pulse-expand 4s ease-out infinite;
+        }
+
+        .circle-1 {
+            top: 20%;
+            left: 30%;
+            width: 100px;
+            height: 100px;
+            border-color: rgba(240, 231, 72, 0.4);
+            animation-delay: 0s;
+        }
+
+        .circle-2 {
+            top: 60%;
+            right: 25%;
+            width: 150px;
+            height: 150px;
+            border-color: rgba(56, 60, 184, 0.4);
+            animation-delay: 1.5s;
+        }
+
+        .circle-3 {
+            bottom: 25%;
+            left: 50%;
+            width: 120px;
+            height: 120px;
+            border-color: rgba(126, 130, 224, 0.4);
+            animation-delay: 3s;
+        }
+
+        @keyframes pulse-expand {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
         }
 
         /* Hero Gradient Animation - YOUR BRAND COLORS */
@@ -1620,6 +1848,34 @@
             opacity: 0.3 !important;
         }
 
+        /* NEW: Optimize new hero animations on mobile */
+        .hero-badge {
+            padding: 8px 14px !important;
+            font-size: 12px !important;
+        }
+
+        .hero-badge svg {
+            width: 16px !important;
+            height: 16px !important;
+        }
+
+        .badge-3,
+        .badge-4 {
+            display: none !important; /* Hide 2 badges on mobile */
+        }
+
+        .connection-lines {
+            opacity: 0.3 !important;
+        }
+
+        .pulse-circle {
+            animation-duration: 6s !important; /* Slower on mobile */
+        }
+
+        .circle-3 {
+            display: none !important; /* Hide one circle on mobile */
+        }
+
         /* Simplify text animations on mobile - remove glow effects */
         .word-website,
         .word-proposal {
@@ -2454,6 +2710,17 @@
             animation: scroll-bounce 2s ease-in-out infinite;
             opacity: 0;
             animation: scroll-fade-in 1s ease-out 2.5s forwards, scroll-bounce 2s ease-in-out 3.5s infinite;
+            cursor: pointer;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            user-select: none;
+        }
+
+        .scroll-indicator-hero:hover {
+            opacity: 1 !important;
+        }
+
+        .scroll-indicator-hero:active {
+            transform: translateX(-50%) scale(0.95) !important;
         }
 
         @keyframes scroll-fade-in {

@@ -16,57 +16,74 @@
         return /Android/i.test(navigator.userAgent);
     }
 
-    // ===== AGGRESSIVE ANDROID OPTIMIZATIONS =====
+    // ===== APPLY ANDROID CLASS IMMEDIATELY (BEFORE PAGE LOAD) =====
+    // This ensures CSS optimizations apply as early as possible
+    if (isAndroidDevice()) {
+        document.documentElement.classList.add('android-device');
+        document.body.classList.add('android-device');
+        console.log('🤖 Android detected - Applying CSS optimizations immediately');
+    }
+
+    // ===== ULTRA AGGRESSIVE ANDROID OPTIMIZATIONS =====
     function applyAndroidOptimizations() {
         if (!isAndroidDevice()) return;
 
-        console.log('🤖 Android device detected - Applying aggressive optimizations...');
+        console.log('🤖 Android device detected - Applying ULTRA aggressive optimizations...');
 
         // Add Android-specific class for CSS optimizations
         document.body.classList.add('android-device');
 
-        // DISABLE ALL HEAVY ELEMENTS on Android (except loader)
-        const heavyElements = document.querySelectorAll('.blob-shape, .orb, .light-ray, .sparkle, .animated-ring, .floating-dot, .floating-shape');
+        // REMOVE ALL HEAVY ELEMENTS on Android (except loader)
+        const heavyElements = document.querySelectorAll('.blob-shape, .orb, .light-ray, .sparkle, .animated-ring, .floating-dot, .floating-shape, .particle, .floating-badges, .connection-lines, .pulsing-circles');
         heavyElements.forEach(el => {
-            el.style.display = 'none';
+            el.remove(); // Remove from DOM completely
         });
 
-        // Remove ALL particles on Android
-        const particles = document.querySelectorAll('.particle');
-        particles.forEach(particle => {
-            particle.remove();
-        });
-
-        // Simplify gradient - use STATIC gradient on Android (no animation)
+        // Simplify gradient - use SIMPLE STATIC gradient on Android
         const heroSection = document.getElementById('hero-section');
         if (heroSection) {
             heroSection.style.animation = 'none';
-            heroSection.style.background = 'linear-gradient(135deg, #383cb8 0%, #5b5fd4 25%, #7e82e0 50%, #f0e748 100%)';
+            heroSection.style.background = 'linear-gradient(135deg, #383cb8 0%, #f0e748 100%)';
         }
 
-        // Remove ALL blur effects on Android (except loader which needs it)
+        // Remove ALL animations, transitions, filters, shadows from ALL elements (except loader)
         document.querySelectorAll('*').forEach(el => {
-            // Skip loader elements - they need blur to be visible
+            // Skip loader elements - they need animations
             if (el.closest('.loader-wrapper') || el.classList.contains('loader-wrapper')) {
                 return;
             }
+
+            el.style.animation = 'none';
+            el.style.transition = 'none';
             el.style.filter = 'none';
             el.style.backdropFilter = 'none';
             el.style.webkitBackdropFilter = 'none';
+            el.style.boxShadow = 'none';
+            el.style.textShadow = 'none';
+            el.style.transform = 'none';
         });
 
-        // Disable all text shadows on Android
-        document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, span, a, button').forEach(el => {
-            if (!el.closest('.loader-wrapper')) {
-                el.style.textShadow = 'none';
+        // Disable all pseudo-elements (::before, ::after)
+        const style = document.createElement('style');
+        style.innerHTML = `
+            body.android-device *::before,
+            body.android-device *::after {
+                display: none !important;
             }
-        });
+        `;
+        document.head.appendChild(style);
 
-        console.log('✅ Android optimizations applied - Performance should be excellent now!');
+        console.log('✅ ULTRA Android optimizations applied - Maximum performance mode!');
     }
 
     // ===== REAL-TIME PERFORMANCE MONITORING =====
     function monitorPerformance() {
+        // Skip monitoring on Android - already optimized
+        if (isAndroidDevice()) {
+            console.log('⚡ Skipping FPS monitoring on Android - already optimized');
+            return;
+        }
+
         let lastTime = performance.now();
         let frames = 0;
         let fps = 60;
@@ -81,10 +98,10 @@
                 frames = 0;
                 lastTime = currentTime;
 
-                // If FPS drops below 25 for 3 consecutive seconds, apply emergency mode
-                if (fps < 25) {
+                // If FPS drops below 30 for 2 consecutive seconds, apply emergency mode
+                if (fps < 30) {
                     lowFPSCount++;
-                    if (lowFPSCount >= 3) {
+                    if (lowFPSCount >= 2) {
                         console.warn(`⚠️ Critical FPS detected: ${fps} - Applying emergency mode`);
                         applyEmergencyMode();
                         return; // Stop monitoring after emergency mode
@@ -294,13 +311,41 @@
     (function() {
         const loader = document.getElementById('loader');
         if (loader) {
+            // Faster loader on Android for better perceived performance
+            const loaderTime = isAndroidDevice() ? 1500 : 3000; // 1.5s on Android, 3s on others
+
             setTimeout(function() {
                 loader.style.opacity = '0';
                 loader.style.visibility = 'hidden';
                 setTimeout(function() {
                     loader.style.display = 'none';
                 }, 800);
-            }, 3000); // Normal 3 second loader
+            }, loaderTime);
+        }
+    })();
+
+    // ===== SCROLL INDICATOR - SMOOTH SCROLL TO NEXT SECTION =====
+    (function() {
+        const scrollIndicator = document.getElementById('scroll-indicator');
+        if (scrollIndicator) {
+            scrollIndicator.addEventListener('click', function() {
+                const skillsSection = document.getElementById('skills');
+                if (skillsSection) {
+                    skillsSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+
+            // Add hover effect
+            scrollIndicator.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateX(-50%) scale(1.1)';
+            });
+
+            scrollIndicator.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateX(-50%) scale(1)';
+            });
         }
     })();
 

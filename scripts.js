@@ -268,6 +268,16 @@
                         }
                     });
 
+                    // ALSO ensure the hero container itself is visible
+                    const heroSection = document.getElementById('hero-section');
+                    if (heroSection) {
+                        const heroContainer = heroSection.querySelector('.container');
+                        if (heroContainer) {
+                            heroContainer.style.opacity = '1';
+                            heroContainer.style.visibility = 'visible';
+                        }
+                    }
+
                     console.log('✅ Hero content forced visible');
                 }, 800);
             }, loaderTime);
@@ -728,8 +738,12 @@
         const heroSection = document.getElementById('hero-section');
         if (!heroSection) return;
 
-        // Disable parallax on low-end devices
-        if (lowEndDevice) return;
+        // Disable parallax on low-end devices AND mobile devices
+        const isMobile = window.innerWidth < 768;
+        if (lowEndDevice || isMobile) {
+            console.log('⚡ Parallax disabled on mobile/low-end devices');
+            return;
+        }
 
         let ticking = false;
         let lastScrollTime = 0;

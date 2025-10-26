@@ -253,6 +253,7 @@
                     loader.style.display = 'none';
 
                     // CRITICAL: Ensure hero content is visible immediately after loader
+                    // But DON'T override transform - let animations work!
                     const heroElements = [
                         document.querySelector('.word-website'),
                         document.querySelector('.word-proposal'),
@@ -262,9 +263,10 @@
 
                     heroElements.forEach(function(el) {
                         if (el) {
-                            el.style.opacity = '1';
-                            el.style.visibility = 'visible';
-                            el.style.transform = 'none';
+                            // Only set opacity and visibility - let CSS animations handle transform
+                            el.style.setProperty('opacity', '1', 'important');
+                            el.style.setProperty('visibility', 'visible', 'important');
+                            // DON'T set transform - let animations work!
                         }
                     });
 
@@ -273,12 +275,12 @@
                     if (heroSection) {
                         const heroContainer = heroSection.querySelector('.container');
                         if (heroContainer) {
-                            heroContainer.style.opacity = '1';
-                            heroContainer.style.visibility = 'visible';
+                            heroContainer.style.setProperty('opacity', '1', 'important');
+                            heroContainer.style.setProperty('visibility', 'visible', 'important');
                         }
                     }
 
-                    console.log('✅ Hero content forced visible');
+                    console.log('✅ Hero content forced visible - animations preserved');
                 }, 800);
             }, loaderTime);
         }

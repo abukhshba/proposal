@@ -11,132 +11,18 @@
         return isMobile || hasLowMemory || hasSlowConnection;
     }
 
-    // ===== ANDROID DEVICE DETECTION =====
-    function isAndroidDevice() {
-        return /Android/i.test(navigator.userAgent);
+    // ===== MOBILE DEVICE DETECTION (Both Android & iPhone) =====
+    function isMobileDevice() {
+        return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.innerWidth < 768;
     }
 
-    // ===== APPLY ANDROID CLASS IMMEDIATELY (BEFORE PAGE LOAD) =====
-    // This ensures CSS optimizations apply as early as possible
-    if (isAndroidDevice()) {
-        document.documentElement.classList.add('android-device');
-        document.body.classList.add('android-device');
-        console.log('🤖 Android detected - Applying CSS optimizations immediately');
-    }
-
-    // ===== EXTREME ANDROID OPTIMIZATIONS =====
-    function applyAndroidOptimizations() {
-        if (!isAndroidDevice()) return;
-
-        console.log('🤖 Android device detected - Applying EXTREME optimizations...');
-
-        // Add Android-specific class
-        document.body.classList.add('android-device');
-        document.documentElement.classList.add('android-device');
-
-        // REMOVE ALL decorative containers completely
-        const containersToRemove = [
-            '.blob-shape', '.orb', '.light-ray', '.sparkle', '.animated-ring',
-            '.floating-dot', '.floating-shape', '.particle', '.floating-badges',
-            '.connection-lines', '.pulsing-circles', '.shapes-container',
-            '.light-rays', '.orbs-container', '.sparkles-container', '.dots-container',
-            '.particles-container', '.hero-bg-gradient', '.wave-container'
-        ];
-
-        containersToRemove.forEach(selector => {
-            document.querySelectorAll(selector).forEach(el => el.remove());
-        });
-
-        // Simplify hero - SOLID COLOR ONLY
-        const heroSection = document.getElementById('hero-section');
-        if (heroSection) {
-            heroSection.style.animation = 'none';
-            heroSection.style.background = '#383cb8';
-            heroSection.style.backgroundImage = 'none';
-        }
-
-        // Remove ALL effects from ALL elements
-        document.querySelectorAll('*').forEach(el => {
-            if (el.closest('.loader-wrapper') || el.classList.contains('loader-wrapper')) {
-                return;
-            }
-
-            el.style.animation = 'none';
-            el.style.transition = 'none';
-            el.style.filter = 'none';
-            el.style.backdropFilter = 'none';
-            el.style.webkitBackdropFilter = 'none';
-            el.style.boxShadow = 'none';
-            el.style.textShadow = 'none';
-            el.style.transform = 'none';
-            el.style.willChange = 'auto';
-        });
-
-        // Inject extreme CSS
-        const style = document.createElement('style');
-        style.innerHTML = `
-            /* Remove effects but keep content visible */
-            html.android-device *, body.android-device * {
-                animation: none !important;
-                transition: none !important;
-                transform: none !important;
-                filter: none !important;
-                backdrop-filter: none !important;
-                box-shadow: none !important;
-                text-shadow: none !important;
-                will-change: auto !important;
-            }
-
-            /* Remove pseudo-elements except essential ones */
-            body.android-device .blob-shape::before,
-            body.android-device .blob-shape::after,
-            body.android-device .orb::before,
-            body.android-device .orb::after,
-            body.android-device .particle::before,
-            body.android-device .particle::after {
-                display: none !important;
-            }
-
-            /* Simple gradient background - keep it visible */
-            body.android-device #hero-section {
-                background: linear-gradient(180deg, #383cb8 0%, #5b5fd4 100%) !important;
-                min-height: 100vh !important;
-            }
-
-            /* Ensure content is visible */
-            body.android-device .container,
-            body.android-device h1,
-            body.android-device h2,
-            body.android-device h3,
-            body.android-device p,
-            body.android-device button,
-            body.android-device a,
-            body.android-device nav {
-                opacity: 1 !important;
-                visibility: visible !important;
-                display: revert !important;
-            }
-
-            /* Keep loader working */
-            body.android-device .loader-wrapper,
-            body.android-device .loader-wrapper * {
-                animation: revert !important;
-                filter: revert !important;
-                transform: revert !important;
-            }
-        `;
-        document.head.appendChild(style);
-
-        console.log('✅ EXTREME Android optimizations applied!');
-    }
+    // ===== SMART UNIVERSAL OPTIMIZATIONS (Works on ALL devices) =====
+    // No device-specific hacks - just smart performance improvements
+    console.log('🚀 Initializing universal optimizations...');
 
     // ===== REAL-TIME PERFORMANCE MONITORING =====
     function monitorPerformance() {
-        // Skip monitoring on Android - already optimized
-        if (isAndroidDevice()) {
-            console.log('⚡ Skipping FPS monitoring on Android - already optimized');
-            return;
-        }
+        console.log('⚡ Starting FPS monitoring for all devices...');
 
         let lastTime = performance.now();
         let frames = 0;
@@ -215,13 +101,6 @@
         const particlesContainer = document.getElementById('particles');
         if (!particlesContainer) return;
 
-        // NO particles on Android for maximum performance
-        const isAndroid = isAndroidDevice();
-        if (isAndroid) {
-            console.log('⚡ Skipping particles on Android for performance');
-            return;
-        }
-
         // Ultra minimal particles for maximum performance
         const isLowPower = isLowPowerDevice();
         const particleCount = isLowPower ? 2 : 5; // Reduced from 3:8 to 2:5
@@ -259,11 +138,10 @@
         const sparklesContainer = document.getElementById('sparkles');
         if (!sparklesContainer) return;
 
-        // NO sparkles on Android or low-power devices
-        const isAndroid = isAndroidDevice();
+        // Skip on low-power devices only
         const isLowPower = isLowPowerDevice();
-        if (isAndroid || isLowPower) {
-            console.log('⚡ Skipping sparkles for performance');
+        if (isLowPower) {
+            console.log('⚡ Skipping sparkles on low-power devices');
             return;
         }
 
@@ -365,8 +243,8 @@
     (function() {
         const loader = document.getElementById('loader');
         if (loader) {
-            // Faster loader on Android for better perceived performance
-            const loaderTime = isAndroidDevice() ? 1500 : 3000; // 1.5s on Android, 3s on others
+            // Universal loader time - works well on all devices
+            const loaderTime = 2000; // 2 seconds for all devices
 
             setTimeout(function() {
                 loader.style.opacity = '0';
@@ -456,10 +334,7 @@
         window.addEventListener('load', function() {
             window.scrollTo(0, 0);
 
-            // Apply Android optimizations FIRST (after loader is visible)
-            applyAndroidOptimizations();
-
-            // Start performance monitoring
+            // Start performance monitoring (works on all devices)
             monitorPerformance();
 
             // Initialize performance optimizations

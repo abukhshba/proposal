@@ -8,105 +8,7 @@
              navigator.connection.effectiveType === '2g' ||
              navigator.connection.effectiveType === '3g');
 
-        // Detect Android devices (typically have weaker GPUs than iPhones)
-        const isAndroid = /Android/i.test(navigator.userAgent);
-
-        // Detect specific low-end Android brands
-        const isLowEndAndroid = /Android.*(?:SM-|OPPO|Vivo|Redmi|Realme)/i.test(navigator.userAgent);
-
-        return isMobile || hasLowMemory || hasSlowConnection || isAndroid || isLowEndAndroid;
-    }
-
-    // ===== ANDROID-SPECIFIC OPTIMIZATIONS =====
-    function isAndroidDevice() {
-        return /Android/i.test(navigator.userAgent);
-    }
-
-    function applyAndroidOptimizations() {
-        if (!isAndroidDevice()) return;
-
-        console.log('🤖 Android device detected - Applying optimizations...');
-
-        // Add Android-specific class for CSS optimizations
-        document.body.classList.add('android-device');
-
-        // Disable heavy animations on Android
-        const heavyElements = document.querySelectorAll('.blob-shape, .orb, .light-ray, .sparkle, .animated-ring');
-        heavyElements.forEach(el => {
-            el.style.display = 'none';
-        });
-
-        // Reduce particle count drastically
-        const particles = document.querySelectorAll('.particle');
-        particles.forEach((particle, index) => {
-            if (index > 0) { // Keep only 1 particle on Android
-                particle.remove();
-            }
-        });
-
-        // Simplify gradient - use static gradient on Android
-        const heroSection = document.getElementById('hero-section');
-        if (heroSection) {
-            heroSection.style.animation = 'none';
-            heroSection.style.background = 'linear-gradient(135deg, #383cb8 0%, #5b5fd4 25%, #7e82e0 50%, #f0e748 100%)';
-        }
-
-        // Remove all blur effects
-        document.querySelectorAll('*').forEach(el => {
-            el.style.filter = 'none';
-            el.style.backdropFilter = 'none';
-            el.style.webkitBackdropFilter = 'none';
-        });
-
-        console.log('✅ Android optimizations applied');
-    }
-
-    // ===== PERFORMANCE MONITOR =====
-    function monitorPerformance() {
-        let lastTime = performance.now();
-        let frames = 0;
-        let fps = 60;
-
-        function checkFPS() {
-            const currentTime = performance.now();
-            frames++;
-
-            if (currentTime >= lastTime + 1000) {
-                fps = Math.round((frames * 1000) / (currentTime - lastTime));
-                frames = 0;
-                lastTime = currentTime;
-
-                // If FPS drops below 30, apply emergency optimizations
-                if (fps < 30) {
-                    console.warn(`⚠️ Low FPS detected: ${fps} - Applying emergency optimizations`);
-                    applyEmergencyOptimizations();
-                }
-            }
-
-            requestAnimationFrame(checkFPS);
-        }
-
-        requestAnimationFrame(checkFPS);
-    }
-
-    function applyEmergencyOptimizations() {
-        // Disable all animations
-        document.body.classList.add('emergency-mode');
-
-        // Hide all decorative elements
-        const decorative = document.querySelectorAll('.blob-shape, .particle, .sparkle, .floating-shape, .orb, .light-ray, .animated-ring, .floating-dot');
-        decorative.forEach(el => {
-            el.style.display = 'none';
-        });
-
-        // Simplify gradient to static
-        const heroSection = document.getElementById('hero-section');
-        if (heroSection) {
-            heroSection.style.animation = 'none';
-            heroSection.style.background = 'linear-gradient(135deg, #383cb8 0%, #f0e748 100%)';
-        }
-
-        console.log('🚨 Emergency optimizations applied - All animations disabled');
+        return isMobile || hasLowMemory || hasSlowConnection;
     }
 
     // ===== PARTICLES ANIMATION (ULTRA OPTIMIZED) =====
@@ -116,17 +18,7 @@
 
         // Ultra minimal particles for maximum performance
         const isLowPower = isLowPowerDevice();
-        const isAndroid = isAndroidDevice();
-
-        // Android gets even fewer particles
-        let particleCount;
-        if (isAndroid) {
-            particleCount = 1; // Only 1 particle on Android
-        } else if (isLowPower) {
-            particleCount = 2;
-        } else {
-            particleCount = 4; // Reduced from 5 to 4 for desktop
-        }
+        const particleCount = isLowPower ? 2 : 5; // Reduced from 3:8 to 2:5
 
         for (let i = 0; i < particleCount; i++) {
             const particle = document.createElement('div');
@@ -161,10 +53,9 @@
         const sparklesContainer = document.getElementById('sparkles');
         if (!sparklesContainer) return;
 
-        // Minimal sparkles - disable on low-power devices and Android
+        // Minimal sparkles - disable on low-power devices
         const isLowPower = isLowPowerDevice();
-        const isAndroid = isAndroidDevice();
-        const sparkleCount = (isLowPower || isAndroid) ? 0 : 2; // Reduced from 3 to 2, disabled on Android
+        const sparkleCount = isLowPower ? 0 : 3; // Reduced from 5 to 3
 
         for (let i = 0; i < sparkleCount; i++) {
             const sparkle = document.createElement('div');
@@ -325,12 +216,6 @@
         window.addEventListener('load', function() {
             window.scrollTo(0, 0);
 
-            // Apply Android optimizations FIRST
-            applyAndroidOptimizations();
-
-            // Start performance monitoring
-            monitorPerformance();
-
             // Initialize performance optimizations
             setupIntersectionObserver();
             handleLowBattery();
@@ -347,17 +232,11 @@
             root.style.setProperty('--accent-color', themeColor);
 
             // Apply subtle color shift to hero gradient
-            const heroGradient = document.querySelector('.hero-gradient');
-            if (heroGradient) {
-                heroGradient.style.filter = `hue-rotate(${Math.random() * 30}deg)`;
-            }
+            document.querySelector('.hero-gradient').style.filter = `hue-rotate(${Math.random() * 30}deg)`;
         });
 
         card.addEventListener('mouseleave', function() {
-            const heroGradient = document.querySelector('.hero-gradient');
-            if (heroGradient) {
-                heroGradient.style.filter = 'hue-rotate(0deg)';
-            }
+            document.querySelector('.hero-gradient').style.filter = 'hue-rotate(0deg)';
         });
     });
 
@@ -365,90 +244,73 @@
     const timelineSteps = document.querySelectorAll('.timeline-step');
     const timelinePath = document.querySelector('.timeline-path');
 
-    // Only initialize if timeline elements exist
-    if (timelineSteps.length > 0) {
-        const observerOptions = {
-            threshold: 0.3,
-            rootMargin: '0px 0px -100px 0px'
-        };
+    const observerOptions = {
+        threshold: 0.3,
+        rootMargin: '0px 0px -100px 0px'
+    };
 
-        const timelineObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animation = 'slide-in-right 0.6s ease-out forwards';
+    const timelineObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animation = 'slide-in-right 0.6s ease-out forwards';
 
-                    // Animate timeline path on first step
-                    if (entry.target.dataset.step === '1' && timelinePath) {
-                        timelinePath.classList.add('animate');
-                    }
+                // Animate timeline path on first step
+                if (entry.target.dataset.step === '1') {
+                    timelinePath.classList.add('animate');
                 }
-            });
-        }, observerOptions);
-
-        timelineSteps.forEach(step => {
-            timelineObserver.observe(step);
+            }
         });
-    }
+    }, observerOptions);
 
-    // ===== Testimonial Carousel (with null checks) =====
+    timelineSteps.forEach(step => {
+        timelineObserver.observe(step);
+    });
+
+    // ===== Testimonial Carousel =====
+    let currentTestimonial = 0;
     const testimonials = document.querySelectorAll('.testimonial');
     const testimonialDots = document.querySelectorAll('.testimonial-dot');
     const prevBtn = document.getElementById('prev-testimonial');
     const nextBtn = document.getElementById('next-testimonial');
 
-    // Only initialize if testimonials exist
-    if (testimonials.length > 0 && testimonialDots.length > 0) {
-        let currentTestimonial = 0;
+    function showTestimonial(index) {
+        testimonials.forEach((testimonial, i) => {
+            testimonial.classList.remove('active');
+            testimonialDots[i].classList.remove('bg-indigo-500');
+            testimonialDots[i].classList.add('bg-gray-300');
+        });
 
-        function showTestimonial(index) {
-            testimonials.forEach((testimonial, i) => {
-                testimonial.classList.remove('active');
-                if (testimonialDots[i]) {
-                    testimonialDots[i].classList.remove('bg-indigo-500');
-                    testimonialDots[i].classList.add('bg-gray-300');
-                }
-            });
-
-            if (testimonials[index]) {
-                testimonials[index].classList.add('active');
-            }
-            if (testimonialDots[index]) {
-                testimonialDots[index].classList.remove('bg-gray-300');
-                testimonialDots[index].classList.add('bg-indigo-500');
-            }
-            currentTestimonial = index;
-        }
-
-        function nextTestimonial() {
-            const next = (currentTestimonial + 1) % testimonials.length;
-            showTestimonial(next);
-        }
-
-        function prevTestimonial() {
-            const prev = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
-            showTestimonial(prev);
-        }
-
-        // Auto-rotate testimonials
-        let testimonialInterval = setInterval(nextTestimonial, 5000);
-
-        // Manual navigation
-        if (nextBtn) {
-            nextBtn.addEventListener('click', () => {
-                clearInterval(testimonialInterval);
-                nextTestimonial();
-                testimonialInterval = setInterval(nextTestimonial, 5000);
-            });
-        }
-
-        if (prevBtn) {
-            prevBtn.addEventListener('click', () => {
-                clearInterval(testimonialInterval);
-                prevTestimonial();
-                testimonialInterval = setInterval(nextTestimonial, 5000);
-            });
-        }
+        testimonials[index].classList.add('active');
+        testimonialDots[index].classList.remove('bg-gray-300');
+        testimonialDots[index].classList.add('bg-indigo-500');
+        currentTestimonial = index;
     }
+
+    function nextTestimonial() {
+        const next = (currentTestimonial + 1) % testimonials.length;
+        showTestimonial(next);
+    }
+
+    function prevTestimonial() {
+        const prev = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+        showTestimonial(prev);
+    }
+
+    // Auto-rotate testimonials
+    let testimonialInterval = setInterval(nextTestimonial, 5000);
+
+    // Manual navigation
+    nextBtn.addEventListener('click', () => {
+        clearInterval(testimonialInterval);
+        nextTestimonial();
+        testimonialInterval = setInterval(nextTestimonial, 5000);
+    });
+
+    prevBtn.addEventListener('click', () => {
+        clearInterval(testimonialInterval);
+        prevTestimonial();
+        testimonialInterval = setInterval(nextTestimonial, 5000);
+    });
 
     // Dot navigation
     testimonialDots.forEach((dot, index) => {
@@ -487,15 +349,13 @@
 
     // ===== Confetti Effect =====
     const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-    if (canvas) {
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+    let confettiParticles = [];
 
-        let confettiParticles = [];
-
-        class Confetti {
+    class Confetti {
         constructor() {
             this.x = Math.random() * canvas.width;
             this.y = Math.random() * canvas.height - canvas.height;
@@ -557,9 +417,8 @@
     const contactForm = document.getElementById('contact-form');
     const submitBtn = document.getElementById('submit-btn');
 
-    if (contactForm && submitBtn) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
 
         // Trigger confetti
         createConfetti();
@@ -603,15 +462,13 @@
                     `;
             }, 3000);
         }, 2000);
-        });
-    }
+    });
 
-        // ===== Window Resize Handler =====
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-    } // End of canvas check
+    // ===== Window Resize Handler =====
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
 
     // ===== Smooth Scroll for Navigation =====
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -899,8 +756,6 @@
     // ===== Hero Particles Animation - BRAND COLORS EDITION (OPTIMIZED) =====
     function createParticles() {
         const particlesContainer = document.getElementById('particles-container');
-        if (!particlesContainer) return; // Exit if container doesn't exist
-
         const particleCount = 15; // Reduced from 120 to 15 for maximum performance
 
         for (let i = 0; i < particleCount; i++) {

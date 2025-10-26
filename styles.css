@@ -82,90 +82,6 @@
             background: linear-gradient(135deg, #383cb8 0%, #f0e748 100%);
         }
 
-        /* ===== ANDROID DEVICE OPTIMIZATIONS ===== */
-        /* Aggressive optimizations for Android devices (Samsung, Oppo, Vivo, etc.) */
-        body.android-device .blob-shape,
-        body.android-device .orb,
-        body.android-device .light-ray,
-        body.android-device .sparkle,
-        body.android-device .animated-ring,
-        body.android-device .floating-dot {
-            display: none !important;
-        }
-
-        body.android-device .particle {
-            animation-duration: 80s !important;
-            opacity: 0.25 !important;
-            filter: none !important;
-            backdrop-filter: none !important;
-        }
-
-        body.android-device .hero-gradient,
-        body.android-device .hero-navbar-merged {
-            animation: gradient-shift-simple 180s ease infinite !important;
-            filter: none !important;
-            backdrop-filter: none !important;
-        }
-
-        body.android-device .floating-shape {
-            animation-duration: 120s !important;
-            opacity: 0.15 !important;
-            filter: none !important;
-            backdrop-filter: none !important;
-        }
-
-        /* Remove all blur and heavy effects on Android */
-        body.android-device * {
-            backdrop-filter: none !important;
-            -webkit-backdrop-filter: none !important;
-            text-shadow: none !important;
-        }
-
-        body.android-device .skill-card,
-        body.android-device .btn,
-        body.android-device .navbar {
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
-            backdrop-filter: none !important;
-            -webkit-backdrop-filter: none !important;
-        }
-
-        body.android-device .skill-card:hover {
-            transform: translateY(-2px) !important;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15) !important;
-        }
-
-        /* Simplify gradient animation for Android */
-        @keyframes gradient-shift-simple {
-            0%, 100% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-        }
-
-        /* ===== EMERGENCY MODE (Low FPS Detection) ===== */
-        body.emergency-mode * {
-            animation: none !important;
-            transition: none !important;
-            transform: none !important;
-            filter: none !important;
-            backdrop-filter: none !important;
-            box-shadow: none !important;
-            text-shadow: none !important;
-        }
-
-        body.emergency-mode .hero-navbar-merged,
-        body.emergency-mode .hero-gradient {
-            background: linear-gradient(135deg, #383cb8 0%, #f0e748 100%) !important;
-            animation: none !important;
-        }
-
-        body.emergency-mode .skill-card,
-        body.emergency-mode .btn {
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
-        }
-
         /* Hero Gradient Animation - YOUR BRAND COLORS */
         .hero-gradient {
             background: linear-gradient(-45deg,
@@ -1571,26 +1487,15 @@
 
     /* Responsive - Maximum optimization for mobile performance */
     @media (max-width: 768px) {
-        /* Force hardware acceleration on mobile */
-        * {
-            -webkit-transform: translateZ(0);
-            transform: translateZ(0);
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            -webkit-perspective: 1000;
-            perspective: 1000;
-        }
-
         .navbar-merged {
             padding: 12px 0;
         }
 
         /* Ultra minimal blob animations on mobile */
         .blob-shape {
-            animation: blob-morph-simple 200s ease-in-out infinite !important; /* Even slower */
-            opacity: 0.2 !important; /* More transparent */
-            filter: blur(15px) !important; /* Less blur for better performance */
-            will-change: transform;
+            animation: blob-morph-simple 150s ease-in-out infinite !important; /* Much slower */
+            opacity: 0.25 !important; /* More transparent */
+            filter: blur(20px) !important; /* Less blur for better performance */
         }
 
         .blob-left, .blob-right, .blob-center {
@@ -1600,23 +1505,14 @@
 
         /* Ultra minimal shape animations on mobile */
         .floating-shape {
-            animation: shape-float-simple 120s ease-in-out infinite !important; /* Even slower */
-            opacity: 0.1 !important; /* More transparent */
-            filter: none !important; /* Remove blur */
+            animation: shape-float-simple 80s ease-in-out infinite !important; /* Slower */
+            opacity: 0.15 !important; /* More transparent */
         }
 
         /* Ultra slow gradient animation on mobile */
         .hero-navbar-merged {
-            animation: hero-gradient-mega 180s ease infinite !important; /* Much slower */
+            animation: hero-gradient-mega 120s ease infinite !important; /* Much slower */
             background-size: 200% 200%;
-            filter: none !important; /* Remove any filters */
-        }
-
-        /* Simplify particles on mobile */
-        .particle {
-            animation-duration: 100s !important; /* Very slow */
-            opacity: 0.2 !important;
-            filter: none !important;
         }
 
         /* Hide orbs on mobile for performance */

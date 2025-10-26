@@ -82,6 +82,74 @@
             background: linear-gradient(135deg, #383cb8 0%, #f0e748 100%);
         }
 
+        /* ===== ANDROID DEVICE OPTIMIZATIONS - AGGRESSIVE ===== */
+        /* These optimizations ensure excellent performance on Samsung, Oppo, and all Android devices */
+        body.android-device .blob-shape,
+        body.android-device .orb,
+        body.android-device .light-ray,
+        body.android-device .sparkle,
+        body.android-device .animated-ring,
+        body.android-device .floating-dot,
+        body.android-device .floating-shape,
+        body.android-device .particle {
+            display: none !important;
+        }
+
+        /* Remove ALL blur effects on Android for maximum performance */
+        body.android-device * {
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+
+        /* Static gradient on Android - no animation */
+        body.android-device .hero-navbar-merged,
+        body.android-device #hero-section {
+            animation: none !important;
+            background: linear-gradient(135deg, #383cb8 0%, #5b5fd4 25%, #7e82e0 50%, #f0e748 100%) !important;
+        }
+
+        /* Disable text shadows on Android */
+        body.android-device h1,
+        body.android-device h2,
+        body.android-device h3,
+        body.android-device h4,
+        body.android-device h5,
+        body.android-device h6,
+        body.android-device p,
+        body.android-device span,
+        body.android-device a,
+        body.android-device button {
+            text-shadow: none !important;
+        }
+
+        /* Keep loader visible on Android - it needs blur to work */
+        body.android-device .loader-wrapper,
+        body.android-device .loader-wrapper *,
+        body.android-device .loader-bg-circle,
+        body.android-device .loader-ring {
+            display: block !important;
+            filter: revert !important;
+            animation: revert !important;
+        }
+
+        /* ===== EMERGENCY MODE - For extremely low-end devices ===== */
+        body.emergency-mode * {
+            animation: none !important;
+            transition: none !important;
+            transform: none !important;
+            filter: none !important;
+            backdrop-filter: none !important;
+            box-shadow: none !important;
+            text-shadow: none !important;
+        }
+
+        /* Keep loader working in emergency mode */
+        body.emergency-mode .loader-wrapper,
+        body.emergency-mode .loader-wrapper * {
+            animation: revert !important;
+            filter: revert !important;
+        }
+
         /* Hero Gradient Animation - YOUR BRAND COLORS */
         .hero-gradient {
             background: linear-gradient(-45deg,

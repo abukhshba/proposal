@@ -11,10 +11,145 @@
         return isMobile || hasLowMemory || hasSlowConnection;
     }
 
+    // ===== ANDROID DEVICE DETECTION =====
+    function isAndroidDevice() {
+        return /Android/i.test(navigator.userAgent);
+    }
+
+    // ===== AGGRESSIVE ANDROID OPTIMIZATIONS =====
+    function applyAndroidOptimizations() {
+        if (!isAndroidDevice()) return;
+
+        console.log('🤖 Android device detected - Applying aggressive optimizations...');
+
+        // Add Android-specific class for CSS optimizations
+        document.body.classList.add('android-device');
+
+        // DISABLE ALL HEAVY ELEMENTS on Android (except loader)
+        const heavyElements = document.querySelectorAll('.blob-shape, .orb, .light-ray, .sparkle, .animated-ring, .floating-dot, .floating-shape');
+        heavyElements.forEach(el => {
+            el.style.display = 'none';
+        });
+
+        // Remove ALL particles on Android
+        const particles = document.querySelectorAll('.particle');
+        particles.forEach(particle => {
+            particle.remove();
+        });
+
+        // Simplify gradient - use STATIC gradient on Android (no animation)
+        const heroSection = document.getElementById('hero-section');
+        if (heroSection) {
+            heroSection.style.animation = 'none';
+            heroSection.style.background = 'linear-gradient(135deg, #383cb8 0%, #5b5fd4 25%, #7e82e0 50%, #f0e748 100%)';
+        }
+
+        // Remove ALL blur effects on Android (except loader which needs it)
+        document.querySelectorAll('*').forEach(el => {
+            // Skip loader elements - they need blur to be visible
+            if (el.closest('.loader-wrapper') || el.classList.contains('loader-wrapper')) {
+                return;
+            }
+            el.style.filter = 'none';
+            el.style.backdropFilter = 'none';
+            el.style.webkitBackdropFilter = 'none';
+        });
+
+        // Disable all text shadows on Android
+        document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, span, a, button').forEach(el => {
+            if (!el.closest('.loader-wrapper')) {
+                el.style.textShadow = 'none';
+            }
+        });
+
+        console.log('✅ Android optimizations applied - Performance should be excellent now!');
+    }
+
+    // ===== REAL-TIME PERFORMANCE MONITORING =====
+    function monitorPerformance() {
+        let lastTime = performance.now();
+        let frames = 0;
+        let fps = 60;
+        let lowFPSCount = 0;
+
+        function checkFPS() {
+            const currentTime = performance.now();
+            frames++;
+
+            if (currentTime >= lastTime + 1000) {
+                fps = Math.round((frames * 1000) / (currentTime - lastTime));
+                frames = 0;
+                lastTime = currentTime;
+
+                // If FPS drops below 25 for 3 consecutive seconds, apply emergency mode
+                if (fps < 25) {
+                    lowFPSCount++;
+                    if (lowFPSCount >= 3) {
+                        console.warn(`⚠️ Critical FPS detected: ${fps} - Applying emergency mode`);
+                        applyEmergencyMode();
+                        return; // Stop monitoring after emergency mode
+                    }
+                } else {
+                    lowFPSCount = 0;
+                }
+            }
+
+            requestAnimationFrame(checkFPS);
+        }
+
+        requestAnimationFrame(checkFPS);
+    }
+
+    // ===== EMERGENCY MODE FOR EXTREMELY LOW-END DEVICES =====
+    function applyEmergencyMode() {
+        document.body.classList.add('emergency-mode');
+
+        // Remove EVERYTHING decorative
+        const decorative = document.querySelectorAll('.blob-shape, .particle, .sparkle, .floating-shape, .orb, .light-ray, .animated-ring, .floating-dot');
+        decorative.forEach(el => {
+            el.remove();
+        });
+
+        // Static gradient only
+        const heroSection = document.getElementById('hero-section');
+        if (heroSection) {
+            heroSection.style.animation = 'none';
+            heroSection.style.background = 'linear-gradient(135deg, #383cb8 0%, #f0e748 100%)';
+        }
+
+        // Disable all animations globally
+        const style = document.createElement('style');
+        style.innerHTML = `
+            * {
+                animation: none !important;
+                transition: none !important;
+                transform: none !important;
+                filter: none !important;
+                backdrop-filter: none !important;
+                box-shadow: none !important;
+                text-shadow: none !important;
+            }
+            .loader-wrapper, .loader-wrapper * {
+                animation: revert !important;
+                filter: revert !important;
+            }
+        `;
+        document.head.appendChild(style);
+
+        console.log('🚨 Emergency mode activated - All animations disabled for maximum performance');
+    }
+
     // ===== PARTICLES ANIMATION (ULTRA OPTIMIZED) =====
     function createParticles() {
         const particlesContainer = document.getElementById('particles');
         if (!particlesContainer) return;
+
+        // NO particles on Android for maximum performance
+        const isAndroid = isAndroidDevice();
+        if (isAndroid) {
+            console.log('⚡ Skipping particles on Android for performance');
+            return;
+        }
 
         // Ultra minimal particles for maximum performance
         const isLowPower = isLowPowerDevice();
@@ -53,9 +188,15 @@
         const sparklesContainer = document.getElementById('sparkles');
         if (!sparklesContainer) return;
 
-        // Minimal sparkles - disable on low-power devices
+        // NO sparkles on Android or low-power devices
+        const isAndroid = isAndroidDevice();
         const isLowPower = isLowPowerDevice();
-        const sparkleCount = isLowPower ? 0 : 3; // Reduced from 5 to 3
+        if (isAndroid || isLowPower) {
+            console.log('⚡ Skipping sparkles for performance');
+            return;
+        }
+
+        const sparkleCount = 3; // Reduced from 5 to 3
 
         for (let i = 0; i < sparkleCount; i++) {
             const sparkle = document.createElement('div');
@@ -215,6 +356,12 @@
     (function() {
         window.addEventListener('load', function() {
             window.scrollTo(0, 0);
+
+            // Apply Android optimizations FIRST (after loader is visible)
+            applyAndroidOptimizations();
+
+            // Start performance monitoring
+            monitorPerformance();
 
             // Initialize performance optimizations
             setupIntersectionObserver();

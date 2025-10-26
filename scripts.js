@@ -252,35 +252,38 @@
                 setTimeout(function() {
                     loader.style.display = 'none';
 
-                    // CRITICAL: Ensure hero content is visible immediately after loader
-                    // But DON'T override transform - let animations work!
-                    const heroElements = [
-                        document.querySelector('.word-website'),
-                        document.querySelector('.word-proposal'),
-                        document.getElementById('animated-subtitle'),
-                        document.getElementById('download-btn-container')
-                    ];
-
-                    heroElements.forEach(function(el) {
-                        if (el) {
-                            // Only set opacity and visibility - let CSS animations handle transform
-                            el.style.setProperty('opacity', '1', 'important');
-                            el.style.setProperty('visibility', 'visible', 'important');
-                            // DON'T set transform - let animations work!
-                        }
-                    });
-
-                    // ALSO ensure the hero container itself is visible
+                    // Let CSS animations handle everything - just ensure container is visible
                     const heroSection = document.getElementById('hero-section');
                     if (heroSection) {
                         const heroContainer = heroSection.querySelector('.container');
                         if (heroContainer) {
-                            heroContainer.style.setProperty('opacity', '1', 'important');
-                            heroContainer.style.setProperty('visibility', 'visible', 'important');
+                            // Only ensure container doesn't have opacity override from parallax
+                            heroContainer.style.removeProperty('opacity');
                         }
                     }
 
-                    console.log('✅ Hero content forced visible - animations preserved');
+                    // Debug: Check if animations are running
+                    setTimeout(function() {
+                        const website = document.querySelector('.word-website');
+                        const blob = document.querySelector('.blob-shape');
+                        const badge = document.querySelector('.hero-badge');
+
+                        if (website) {
+                            const style = window.getComputedStyle(website);
+                            console.log('🎬 Website animation:', style.animation);
+                            console.log('🎬 Website opacity:', style.opacity);
+                        }
+                        if (blob) {
+                            const style = window.getComputedStyle(blob);
+                            console.log('🎬 Blob animation:', style.animation);
+                        }
+                        if (badge) {
+                            const style = window.getComputedStyle(badge);
+                            console.log('🎬 Badge animation:', style.animation);
+                        }
+                    }, 1000);
+
+                    console.log('✅ Loader hidden - CSS animations should be running');
                 }, 800);
             }, loaderTime);
         }

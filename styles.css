@@ -85,32 +85,31 @@
         /* ===== UNIVERSAL OPTIMIZATIONS (Works on ALL devices) ===== */
         /* No device-specific hacks - site works the same everywhere */
 
-        /* ===== MOBILE OPTIMIZATIONS - Keep animations but ensure visibility ===== */
+        /* ===== MOBILE OPTIMIZATIONS - Faster animations, ensure they complete ===== */
         @media (max-width: 768px) {
-            /* Start with content visible, then animate */
-            .word-website,
+            /* Make animations faster and ensure they complete */
+            .word-website {
+                /* Faster animation, no delay */
+                animation: word-explode 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards,
+                           gradient-flow 4s ease infinite 0.6s !important;
+            }
+
             .word-proposal {
-                /* Start visible instead of opacity: 0 */
-                opacity: 1;
-                /* Keep all animations - just faster */
-                animation-duration: 0.8s !important;
-                animation-delay: 0s !important;
+                /* Faster animation, minimal delay */
+                animation: word-explode 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.2s forwards,
+                           gradient-flow 4s ease infinite 0.8s !important;
             }
 
             #animated-subtitle {
-                /* Start visible */
-                opacity: 1;
-                /* Keep animation but faster */
-                animation-duration: 0.6s !important;
-                animation-delay: 0.3s !important;
+                /* Faster animation */
+                animation-duration: 0.5s !important;
+                animation-delay: 0.4s !important;
             }
 
             #download-btn-container {
-                /* Start visible */
-                opacity: 1;
-                /* Keep animation but faster */
-                animation-duration: 0.6s !important;
-                animation-delay: 0.5s !important;
+                /* Faster animation */
+                animation-duration: 0.5s !important;
+                animation-delay: 0.6s !important;
             }
         }
 

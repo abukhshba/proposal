@@ -75,6 +75,7 @@
         // Inject extreme CSS
         const style = document.createElement('style');
         style.innerHTML = `
+            /* Remove effects but keep content visible */
             html.android-device *, body.android-device * {
                 animation: none !important;
                 transition: none !important;
@@ -85,13 +86,38 @@
                 text-shadow: none !important;
                 will-change: auto !important;
             }
-            body.android-device *::before,
-            body.android-device *::after {
+
+            /* Remove pseudo-elements except essential ones */
+            body.android-device .blob-shape::before,
+            body.android-device .blob-shape::after,
+            body.android-device .orb::before,
+            body.android-device .orb::after,
+            body.android-device .particle::before,
+            body.android-device .particle::after {
                 display: none !important;
             }
+
+            /* Simple gradient background - keep it visible */
             body.android-device #hero-section {
-                background: #383cb8 !important;
+                background: linear-gradient(180deg, #383cb8 0%, #5b5fd4 100%) !important;
+                min-height: 100vh !important;
             }
+
+            /* Ensure content is visible */
+            body.android-device .container,
+            body.android-device h1,
+            body.android-device h2,
+            body.android-device h3,
+            body.android-device p,
+            body.android-device button,
+            body.android-device a,
+            body.android-device nav {
+                opacity: 1 !important;
+                visibility: visible !important;
+                display: revert !important;
+            }
+
+            /* Keep loader working */
             body.android-device .loader-wrapper,
             body.android-device .loader-wrapper * {
                 animation: revert !important;

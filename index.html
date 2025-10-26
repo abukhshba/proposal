@@ -701,13 +701,15 @@
             z-index: 0;
         }
 
-        /* Hero Particles */
+        /* Hero Particles (Optimized) */
         .particle {
             position: absolute;
             background: white;
             border-radius: 50%;
-            opacity: 0.6;
-            animation: float-particle 20s infinite;
+            opacity: 0.5;
+            animation: float-particle 30s infinite;
+            transform: translateZ(0);
+            backface-visibility: hidden;
         }
 
         @keyframes float-particle {
@@ -1269,32 +1271,28 @@
         <div class="floating-shape shape-triangle"></div>
     </div>
 
-    <!-- Animated Light Rays (Reduced) -->
+    <!-- Animated Light Rays (Minimal) -->
     <div class="light-rays">
         <div class="light-ray ray-1"></div>
-        <div class="light-ray ray-2"></div>
     </div>
 
-    <!-- Floating Orbs (Reduced) -->
+    <!-- Floating Orbs (Minimal) -->
     <div class="orbs-container">
         <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
     </div>
 
-    <!-- Animated Rings (Reduced) -->
+    <!-- Animated Rings (Minimal) -->
     <div class="rings-container">
         <div class="animated-ring ring-1"></div>
-        <div class="animated-ring ring-2"></div>
     </div>
 
     <!-- Sparkles -->
     <div class="sparkles-container" id="sparkles"></div>
 
-    <!-- Floating Dots (Reduced) -->
+    <!-- Floating Dots (Minimal) -->
     <div class="dots-container">
         <div class="floating-dot dot-1"></div>
         <div class="floating-dot dot-2"></div>
-        <div class="floating-dot dot-3"></div>
     </div>
 
     <!-- Navigation Bar (Floating on top) -->
@@ -1348,7 +1346,7 @@
     </nav>
 
 <style>
-    /* ===== MERGED HERO + NAVBAR SECTION (HIGHLY OPTIMIZED) ===== */
+    /* ===== MERGED HERO + NAVBAR SECTION (MAXIMUM OPTIMIZATION) ===== */
     .hero-navbar-merged {
         position: relative;
         background: linear-gradient(135deg,
@@ -1358,9 +1356,9 @@
             #f0e748 100%
         );
         background-size: 200% 200%;
-        animation: hero-gradient-mega 30s ease infinite;
+        animation: hero-gradient-mega 45s ease infinite;
         contain: layout style paint;
-        will-change: background-position;
+        will-change: auto;
     }
 
     @keyframes hero-gradient-mega {
@@ -1642,71 +1640,69 @@
         box-shadow: 0 6px 30px rgba(240, 231, 72, 0.6);
     }
 
-    /* Responsive - Highly optimized for mobile performance */
+    /* Responsive - Maximum optimization for mobile performance */
     @media (max-width: 768px) {
         .navbar-merged {
             padding: 12px 0;
         }
 
-        /* Simplified blob animations on mobile */
+        /* Minimal blob animations on mobile */
         .blob-shape {
-            animation: blob-morph-simple 60s ease-in-out infinite !important;
-            opacity: 0.4;
-            filter: blur(40px);
+            animation: blob-morph-simple 90s ease-in-out infinite !important;
+            opacity: 0.35;
+            filter: blur(30px);
         }
 
         .blob-left, .blob-right, .blob-center {
-            width: 400px !important;
-            height: 400px !important;
+            width: 350px !important;
+            height: 350px !important;
         }
 
-        /* Simplified shape animations on mobile */
+        /* Minimal shape animations on mobile */
         .floating-shape {
-            animation: shape-float-simple 35s ease-in-out infinite !important;
-            opacity: 0.25;
+            animation: shape-float-simple 50s ease-in-out infinite !important;
+            opacity: 0.2;
         }
 
-        /* Keep gradient animation on mobile but much slower */
+        /* Very slow gradient animation on mobile */
         .hero-navbar-merged {
-            animation: hero-gradient-mega 50s ease infinite;
+            animation: hero-gradient-mega 70s ease infinite;
             background-size: 200% 200%;
         }
 
-        /* Optimize orbs for mobile */
+        /* Hide orbs on mobile for performance */
         .orb {
-            filter: blur(20px);
-            opacity: 0.3;
+            display: none;
         }
 
-        .orb-1 {
-            width: 120px;
-            height: 120px;
-        }
-
-        .orb-2 {
-            width: 100px;
-            height: 100px;
-        }
-
-        /* Light rays on mobile - reduced */
+        /* Hide light rays on mobile */
         .light-ray {
-            opacity: 0.2;
-            animation-duration: 12s !important;
+            display: none;
         }
 
-        /* Reduce sparkles on mobile */
+        /* Hide sparkles on mobile */
         .sparkle {
             display: none;
         }
 
-        /* Simplify rings on mobile */
+        /* Hide rings on mobile */
         .animated-ring {
-            animation-duration: 10s !important;
+            display: none;
         }
 
-        /* Reduce dots on mobile */
+        /* Minimal dots on mobile */
         .floating-dot {
-            animation-duration: 25s !important;
+            animation-duration: 40s !important;
+            opacity: 0.3;
+        }
+
+        /* Hide one dot on mobile */
+        .floating-dot.dot-2 {
+            display: none;
+        }
+
+        /* Reduce particle opacity on mobile */
+        .particle {
             opacity: 0.4;
         }
     }
@@ -1720,47 +1716,46 @@
         }
     }
 
-    /* ===== BLOB SHAPES WITH MORPHING ANIMATIONS (HIGHLY OPTIMIZED) ===== */
+    /* ===== BLOB SHAPES WITH MORPHING ANIMATIONS (MAXIMUM OPTIMIZATION) ===== */
     .blob-shape {
         position: absolute;
         border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-        filter: blur(60px); /* Further reduced blur for better performance */
-        opacity: 0.5;
+        filter: blur(50px); /* Minimal blur for best performance */
+        opacity: 0.45;
         z-index: 2;
-        animation: blob-morph-simple 40s ease-in-out infinite;
-        transition: transform 0.6s ease-out;
-        will-change: transform;
+        animation: blob-morph-simple 60s ease-in-out infinite;
+        will-change: auto;
     }
 
     .blob-left {
-        width: 600px;
-        height: 600px;
+        width: 550px;
+        height: 550px;
         background: linear-gradient(135deg, #383cb8 0%, #5b5fd4 50%, #7e82e0 100%);
         top: -15%;
         left: -20%;
-        animation: blob-morph-simple 45s ease-in-out infinite;
-        box-shadow: 0 0 80px rgba(56, 60, 184, 0.4);
+        animation: blob-morph-simple 70s ease-in-out infinite;
+        box-shadow: 0 0 60px rgba(56, 60, 184, 0.3);
     }
 
     .blob-right {
-        width: 750px;
-        height: 750px;
+        width: 650px;
+        height: 650px;
         background: linear-gradient(135deg, #f0e748 0%, #ece89e 50%, #d8d9f4 100%);
         top: 5%;
         right: -25%;
-        animation: blob-morph-simple 50s ease-in-out infinite 10s;
-        box-shadow: 0 0 100px rgba(240, 231, 72, 0.5);
+        animation: blob-morph-simple 80s ease-in-out infinite 15s;
+        box-shadow: 0 0 70px rgba(240, 231, 72, 0.4);
     }
 
     .blob-center {
-        width: 700px;
-        height: 700px;
+        width: 600px;
+        height: 600px;
         background: linear-gradient(135deg, #7e82e0 0%, #a1a4ec 50%, #c4c6f8 100%);
         top: 40%;
         left: 50%;
         transform: translateX(-50%);
-        animation: blob-morph-simple 55s ease-in-out infinite 20s;
-        box-shadow: 0 0 90px rgba(126, 130, 224, 0.4);
+        animation: blob-morph-simple 90s ease-in-out infinite 30s;
+        box-shadow: 0 0 65px rgba(126, 130, 224, 0.3);
     }
 
     /* Simplified blob animation for better performance */
@@ -1773,7 +1768,7 @@
         }
     }
 
-        /* Particles Container (Optimized) */
+        /* Particles Container (Maximum Optimization) */
         .particles-container {
             position: absolute;
             width: 100%;
@@ -1782,6 +1777,8 @@
             pointer-events: none;
             z-index: 3;
             contain: layout style paint;
+            transform: translateZ(0);
+            backface-visibility: hidden;
         }
         
         @keyframes particle-float {
@@ -2846,13 +2843,13 @@
 
 <!-- JavaScript -->
 <script>
-    // ===== PARTICLES ANIMATION (HIGHLY OPTIMIZED) =====
+    // ===== PARTICLES ANIMATION (MAXIMUM OPTIMIZATION) =====
     function createParticles() {
         const particlesContainer = document.getElementById('particles');
         if (!particlesContainer) return;
 
-        // Significantly reduce particles for better performance
-        const particleCount = window.innerWidth < 768 ? 5 : 12;
+        // Minimal particles for best performance
+        const particleCount = window.innerWidth < 768 ? 3 : 8;
 
         for (let i = 0; i < particleCount; i++) {
             const particle = document.createElement('div');
@@ -2866,29 +2863,29 @@
             // Random horizontal position
             particle.style.left = `${Math.random() * 100}%`;
 
-            // Random animation duration (slower for less CPU usage)
-            const duration = Math.random() * 10 + 25;
+            // Random animation duration (much slower for minimal CPU usage)
+            const duration = Math.random() * 15 + 30;
             particle.style.animationDuration = `${duration}s`;
 
             // Random delay
-            const delay = Math.random() * 5;
+            const delay = Math.random() * 8;
             particle.style.animationDelay = `${delay}s`;
 
             // Random drift
-            const drift = (Math.random() - 0.5) * 100;
+            const drift = (Math.random() - 0.5) * 80;
             particle.style.setProperty('--drift', `${drift}px`);
 
             particlesContainer.appendChild(particle);
         }
     }
 
-    // ===== SPARKLES ANIMATION (OPTIMIZED) =====
+    // ===== SPARKLES ANIMATION (HIGHLY OPTIMIZED) =====
     function createSparkles() {
         const sparklesContainer = document.getElementById('sparkles');
         if (!sparklesContainer) return;
 
-        // Significantly reduce sparkles for performance
-        const sparkleCount = window.innerWidth < 768 ? 5 : 8;
+        // Further reduce sparkles for better performance
+        const sparkleCount = window.innerWidth < 768 ? 0 : 5;
 
         for (let i = 0; i < sparkleCount; i++) {
             const sparkle = document.createElement('div');
@@ -2899,11 +2896,11 @@
             sparkle.style.left = `${Math.random() * 100}%`;
 
             // Random animation delay
-            const delay = Math.random() * 3;
+            const delay = Math.random() * 4;
             sparkle.style.animationDelay = `${delay}s`;
 
-            // Random animation duration
-            const duration = Math.random() * 2 + 3;
+            // Random animation duration (slower)
+            const duration = Math.random() * 3 + 4;
             sparkle.style.animationDuration = `${duration}s`;
 
             sparklesContainer.appendChild(sparkle);
@@ -3325,7 +3322,21 @@
              navigator.connection.effectiveType === '2g' ||
              navigator.connection.effectiveType === '3g');
 
-        return isMobile || hasLowMemory || hasSlowConnection;
+        // Check battery level if available
+        let lowBattery = false;
+        if (navigator.getBattery) {
+            navigator.getBattery().then(battery => {
+                if (battery.level < 0.2 && !battery.charging) {
+                    lowBattery = true;
+                    console.log('Low battery detected - reducing animations');
+                    // Disable heavy animations
+                    const blobs = document.querySelectorAll('.blob-shape');
+                    blobs.forEach(blob => blob.style.display = 'none');
+                }
+            });
+        }
+
+        return isMobile || hasLowMemory || hasSlowConnection || lowBattery;
     }
 
     // ===== Initialize New Features with Performance Checks =====
@@ -3339,9 +3350,36 @@
         // Hide some decorative elements
         const sparkles = document.getElementById('sparkles');
         const rings = document.querySelector('.rings-container');
+        const orbs = document.querySelector('.orbs-container');
+        const lightRays = document.querySelector('.light-rays');
+
         if (sparkles) sparkles.style.display = 'none';
         if (rings) rings.style.display = 'none';
+        if (orbs) orbs.style.display = 'none';
+        if (lightRays) lightRays.style.display = 'none';
     }
+
+    // ===== Pause animations when page is not visible =====
+    document.addEventListener('visibilitychange', () => {
+        const heroSection = document.getElementById('hero-section');
+        if (!heroSection) return;
+
+        if (document.hidden) {
+            // Page is hidden - pause animations
+            heroSection.style.animationPlayState = 'paused';
+            const allAnimated = heroSection.querySelectorAll('*');
+            allAnimated.forEach(el => {
+                el.style.animationPlayState = 'paused';
+            });
+        } else {
+            // Page is visible - resume animations
+            heroSection.style.animationPlayState = 'running';
+            const allAnimated = heroSection.querySelectorAll('*');
+            allAnimated.forEach(el => {
+                el.style.animationPlayState = 'running';
+            });
+        }
+    });
 
     createParticles();
     if (!lowEndDevice) {

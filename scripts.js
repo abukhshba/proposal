@@ -1,14 +1,12 @@
     // ===== DEVICE DETECTION FOR ULTRA OPTIMIZATION =====
     function isLowPowerDevice() {
-        // Check for low-end devices
-        const isMobile = window.innerWidth < 768;
-        const hasLowMemory = navigator.deviceMemory && navigator.deviceMemory < 4;
+        // Check for ACTUAL low-end devices (NOT just mobile)
+        const hasLowMemory = navigator.deviceMemory && navigator.deviceMemory < 2; // Only < 2GB
         const hasSlowConnection = navigator.connection &&
             (navigator.connection.effectiveType === 'slow-2g' ||
-             navigator.connection.effectiveType === '2g' ||
-             navigator.connection.effectiveType === '3g');
+             navigator.connection.effectiveType === '2g');
 
-        return isMobile || hasLowMemory || hasSlowConnection;
+        return hasLowMemory || hasSlowConnection;
     }
 
     // ===== MOBILE DEVICE DETECTION (Both Android & iPhone) =====
@@ -664,21 +662,19 @@
 
     // ===== Performance Optimization - Detect Low-End Devices =====
     function isLowEndDevice() {
-        // Check for low-end device indicators
-        const isMobile = window.innerWidth < 768;
-        const hasLowMemory = navigator.deviceMemory && navigator.deviceMemory < 4;
+        // Check for ACTUAL low-end device indicators (NOT just mobile)
+        const hasLowMemory = navigator.deviceMemory && navigator.deviceMemory < 2; // Only < 2GB
         const hasSlowConnection = navigator.connection &&
             (navigator.connection.effectiveType === 'slow-2g' ||
-             navigator.connection.effectiveType === '2g' ||
-             navigator.connection.effectiveType === '3g');
+             navigator.connection.effectiveType === '2g');
 
         // Check battery level if available
         let lowBattery = false;
         if (navigator.getBattery) {
             navigator.getBattery().then(battery => {
-                if (battery.level < 0.2 && !battery.charging) {
+                if (battery.level < 0.15 && !battery.charging) { // Only < 15%
                     lowBattery = true;
-                    console.log('Low battery detected - reducing animations');
+                    console.log('⚠️ Low battery detected - reducing animations');
                     // Disable heavy animations
                     const blobs = document.querySelectorAll('.blob-shape');
                     blobs.forEach(blob => blob.style.display = 'none');
@@ -686,7 +682,7 @@
             });
         }
 
-        return isMobile || hasLowMemory || hasSlowConnection || lowBattery;
+        return hasLowMemory || hasSlowConnection || lowBattery;
     }
 
     // ===== Initialize New Features with Performance Checks =====
@@ -743,10 +739,9 @@
         const heroSection = document.getElementById('hero-section');
         if (!heroSection) return;
 
-        // Disable parallax on low-end devices AND mobile devices
-        const isMobile = window.innerWidth < 768;
-        if (lowEndDevice || isMobile) {
-            console.log('⚡ Parallax disabled on mobile/low-end devices');
+        // Disable parallax on low-end devices only
+        if (lowEndDevice) {
+            console.log('⚡ Parallax disabled on low-end devices');
             return;
         }
 

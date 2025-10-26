@@ -1262,27 +1262,39 @@
     <!-- Floating Particles -->
     <div class="particles-container" id="particles"></div>
 
-    <!-- Floating Geometric Shapes with More Animations -->
+    <!-- Floating Geometric Shapes (Optimized) -->
     <div class="shapes-container">
         <div class="floating-shape shape-circle"></div>
         <div class="floating-shape shape-square"></div>
         <div class="floating-shape shape-triangle"></div>
-        <div class="floating-shape shape-hexagon"></div>
-        <div class="floating-shape shape-diamond"></div>
     </div>
 
-    <!-- Animated Light Rays -->
+    <!-- Animated Light Rays (Reduced) -->
     <div class="light-rays">
         <div class="light-ray ray-1"></div>
         <div class="light-ray ray-2"></div>
-        <div class="light-ray ray-3"></div>
     </div>
 
-    <!-- Floating Orbs -->
+    <!-- Floating Orbs (Reduced) -->
     <div class="orbs-container">
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Animated Rings (Reduced) -->
+    <div class="rings-container">
+        <div class="animated-ring ring-1"></div>
+        <div class="animated-ring ring-2"></div>
+    </div>
+
+    <!-- Sparkles -->
+    <div class="sparkles-container" id="sparkles"></div>
+
+    <!-- Floating Dots (Reduced) -->
+    <div class="dots-container">
+        <div class="floating-dot dot-1"></div>
+        <div class="floating-dot dot-2"></div>
+        <div class="floating-dot dot-3"></div>
     </div>
 
     <!-- Navigation Bar (Floating on top) -->
@@ -1336,7 +1348,7 @@
     </nav>
 
 <style>
-    /* ===== MERGED HERO + NAVBAR SECTION (OPTIMIZED) ===== */
+    /* ===== MERGED HERO + NAVBAR SECTION (HIGHLY OPTIMIZED) ===== */
     .hero-navbar-merged {
         position: relative;
         background: linear-gradient(135deg,
@@ -1346,7 +1358,9 @@
             #f0e748 100%
         );
         background-size: 200% 200%;
-        animation: hero-gradient-mega 25s ease infinite;
+        animation: hero-gradient-mega 30s ease infinite;
+        contain: layout style paint;
+        will-change: background-position;
     }
 
     @keyframes hero-gradient-mega {
@@ -1628,77 +1642,125 @@
         box-shadow: 0 6px 30px rgba(240, 231, 72, 0.6);
     }
 
-    /* Responsive - Disable heavy animations on mobile */
+    /* Responsive - Highly optimized for mobile performance */
     @media (max-width: 768px) {
         .navbar-merged {
             padding: 12px 0;
         }
 
-        /* Disable blob animations on mobile */
+        /* Simplified blob animations on mobile */
         .blob-shape {
-            animation: none !important;
+            animation: blob-morph-simple 60s ease-in-out infinite !important;
             opacity: 0.4;
+            filter: blur(40px);
         }
 
-        /* Disable shape animations on mobile */
+        .blob-left, .blob-right, .blob-center {
+            width: 400px !important;
+            height: 400px !important;
+        }
+
+        /* Simplified shape animations on mobile */
         .floating-shape {
-            animation: none !important;
-            opacity: 0.2;
+            animation: shape-float-simple 35s ease-in-out infinite !important;
+            opacity: 0.25;
         }
 
-        /* Disable particle animations on mobile */
-        .particle {
+        /* Keep gradient animation on mobile but much slower */
+        .hero-navbar-merged {
+            animation: hero-gradient-mega 50s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        /* Optimize orbs for mobile */
+        .orb {
+            filter: blur(20px);
+            opacity: 0.3;
+        }
+
+        .orb-1 {
+            width: 120px;
+            height: 120px;
+        }
+
+        .orb-2 {
+            width: 100px;
+            height: 100px;
+        }
+
+        /* Light rays on mobile - reduced */
+        .light-ray {
+            opacity: 0.2;
+            animation-duration: 12s !important;
+        }
+
+        /* Reduce sparkles on mobile */
+        .sparkle {
             display: none;
         }
 
-        /* Simplify gradient on mobile */
-        .hero-navbar-merged {
-            animation: none;
-            background: linear-gradient(135deg, #383cb8 0%, #7e82e0 50%, #f0e748 100%);
+        /* Simplify rings on mobile */
+        .animated-ring {
+            animation-duration: 10s !important;
+        }
+
+        /* Reduce dots on mobile */
+        .floating-dot {
+            animation-duration: 25s !important;
+            opacity: 0.4;
         }
     }
 
-    /* ===== BLOB SHAPES WITH MORPHING ANIMATIONS (OPTIMIZED) ===== */
+    /* Reduce motion for users who prefer it */
+    @media (prefers-reduced-motion: reduce) {
+        * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
+    }
+
+    /* ===== BLOB SHAPES WITH MORPHING ANIMATIONS (HIGHLY OPTIMIZED) ===== */
     .blob-shape {
         position: absolute;
         border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-        filter: blur(80px); /* Reduced blur for better performance */
-        opacity: 0.6;
+        filter: blur(60px); /* Further reduced blur for better performance */
+        opacity: 0.5;
         z-index: 2;
-        animation: blob-morph 25s ease-in-out infinite;
-        transition: transform 0.5s ease-out; /* Slower transition for smoother effect */
+        animation: blob-morph-simple 40s ease-in-out infinite;
+        transition: transform 0.6s ease-out;
         will-change: transform;
     }
 
     .blob-left {
-        width: 700px;
-        height: 700px;
+        width: 600px;
+        height: 600px;
         background: linear-gradient(135deg, #383cb8 0%, #5b5fd4 50%, #7e82e0 100%);
         top: -15%;
         left: -20%;
-        animation: blob-morph-simple 30s ease-in-out infinite;
-        box-shadow: 0 0 120px rgba(56, 60, 184, 0.6);
+        animation: blob-morph-simple 45s ease-in-out infinite;
+        box-shadow: 0 0 80px rgba(56, 60, 184, 0.4);
     }
 
     .blob-right {
-        width: 900px;
-        height: 900px;
+        width: 750px;
+        height: 750px;
         background: linear-gradient(135deg, #f0e748 0%, #ece89e 50%, #d8d9f4 100%);
         top: 5%;
         right: -25%;
-        animation: blob-morph-simple 35s ease-in-out infinite 5s;
-        box-shadow: 0 0 150px rgba(240, 231, 72, 0.7);
+        animation: blob-morph-simple 50s ease-in-out infinite 10s;
+        box-shadow: 0 0 100px rgba(240, 231, 72, 0.5);
     }
 
     .blob-center {
-        width: 800px;
-        height: 800px;
+        width: 700px;
+        height: 700px;
         background: linear-gradient(135deg, #7e82e0 0%, #a1a4ec 50%, #c4c6f8 100%);
         top: 40%;
         left: 50%;
         transform: translateX(-50%);
-        animation: blob-morph-simple 40s ease-in-out infinite 10s;
-        box-shadow: 0 0 140px rgba(126, 130, 224, 0.5);
+        animation: blob-morph-simple 55s ease-in-out infinite 20s;
+        box-shadow: 0 0 90px rgba(126, 130, 224, 0.4);
     }
 
     /* Simplified blob animation for better performance */
@@ -1711,7 +1773,7 @@
         }
     }
 
-        /* Particles Container */
+        /* Particles Container (Optimized) */
         .particles-container {
             position: absolute;
             width: 100%;
@@ -1719,18 +1781,9 @@
             overflow: hidden;
             pointer-events: none;
             z-index: 3;
+            contain: layout style paint;
         }
-
-        .particle {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: particle-float linear infinite;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
-                        0 0 20px rgba(240, 231, 72, 0.5);
-        }
-
+        
         @keyframes particle-float {
             0% {
                 transform: translateY(100vh) translateX(0) scale(0);
@@ -1747,27 +1800,7 @@
                 opacity: 0;
             }
         }
-
-        .bubble-yellow {
-            background: radial-gradient(circle at 30% 30%, rgba(240, 231, 72, 0.8), rgba(240, 231, 72, 0.3));
-            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.4),
-                        0 0 40px rgba(240, 231, 72, 0.6),
-                        0 0 80px rgba(240, 231, 72, 0.3);
-        }
-
-        .bubble-blue {
-            background: radial-gradient(circle at 30% 30%, rgba(56, 60, 184, 0.8), rgba(56, 60, 184, 0.3));
-            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.4),
-                        0 0 40px rgba(56, 60, 184, 0.6),
-                        0 0 80px rgba(56, 60, 184, 0.3);
-        }
-
-        .bubble-gradient {
-            background: radial-gradient(circle at 30% 30%, rgba(126, 130, 224, 0.8), rgba(161, 164, 236, 0.3));
-            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.4),
-                        0 0 40px rgba(126, 130, 224, 0.6),
-                        0 0 80px rgba(161, 164, 236, 0.3);
-        }
+        
 
         @keyframes bubble-rise {
             0% {
@@ -1839,97 +1872,6 @@
             left: 80%;
             animation: shape-float-simple 20s ease-in-out infinite 6s, shape-spin 25s linear infinite;
             filter: drop-shadow(0 0 20px rgba(126, 130, 224, 0.5));
-        }
-
-        .shape-hexagon {
-            width: 60px;
-            height: 35px;
-            background: rgba(240, 231, 72, 0.5);
-            position: relative;
-            top: 70%;
-            left: 25%;
-            animation: shape-float-simple 22s ease-in-out infinite 4s, shape-pulse 4s ease-in-out infinite;
-            filter: drop-shadow(0 0 25px rgba(240, 231, 72, 0.6));
-        }
-
-        .shape-hexagon:before {
-            content: "";
-            position: absolute;
-            top: -17.5px;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-left: 30px solid transparent;
-            border-right: 30px solid transparent;
-            border-bottom: 17.5px solid rgba(240, 231, 72, 0.5);
-        }
-
-        .shape-hexagon:after {
-            content: "";
-            position: absolute;
-            bottom: -17.5px;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-left: 30px solid transparent;
-            border-right: 30px solid transparent;
-            border-top: 17.5px solid rgba(240, 231, 72, 0.5);
-        }
-
-        .shape-diamond {
-            width: 50px;
-            height: 50px;
-            background: rgba(161, 164, 236, 0.6);
-            transform: rotate(45deg);
-            top: 25%;
-            right: 25%;
-            animation: shape-float-simple 18s ease-in-out infinite 8s, shape-spin-reverse 20s linear infinite;
-            box-shadow: 0 0 30px rgba(161, 164, 236, 0.7);
-        }
-
-        .shape-hexagon {
-            width: 70px;
-            height: 40px;
-            background: transparent;
-            border-left: 3px solid #f0e748;
-            border-right: 3px solid #f0e748;
-            position: relative;
-            top: 70%;
-            left: 25%;
-            /* animation: shape-float 13s ease-in-out infinite 3s, shape-rotate-reverse 22s linear infinite; DISABLED FOR PERFORMANCE */
-        }
-
-        .shape-hexagon::before,
-        .shape-hexagon::after {
-            content: "";
-            position: absolute;
-            width: 0;
-            border-left: 38px solid transparent;
-            border-right: 38px solid transparent;
-            left: -3px;
-        }
-
-        .shape-hexagon::before {
-            bottom: 100%;
-            border-bottom: 20px solid #f0e748;
-        }
-
-        .shape-hexagon::after {
-            top: 100%;
-            border-top: 20px solid #f0e748;
-        }
-
-        .shape-star {
-            width: 0;
-            height: 0;
-            border-left: 30px solid transparent;
-            border-right: 30px solid transparent;
-            border-bottom: 50px solid #5b5fd4;
-            position: relative;
-            top: 15%;
-            right: 20%;
-            /* animation: shape-float 17s ease-in-out infinite 4s, shape-pulse 3s ease-in-out infinite; DISABLED FOR PERFORMANCE */
-            filter: drop-shadow(0 0 25px rgba(91, 95, 212, 0.6));
         }
 
         /* Shape animations */
@@ -2034,37 +1976,27 @@
         .orb {
             position: absolute;
             border-radius: 50%;
-            filter: blur(40px);
-            animation: orb-float 20s ease-in-out infinite;
+            filter: blur(30px);
+            animation: orb-float 25s ease-in-out infinite;
         }
 
         .orb-1 {
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(240, 231, 72, 0.6) 0%, transparent 70%);
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, rgba(240, 231, 72, 0.5) 0%, transparent 70%);
             top: 15%;
             left: 15%;
-            animation-duration: 18s;
+            animation-duration: 22s;
         }
 
         .orb-2 {
-            width: 150px;
-            height: 150px;
-            background: radial-gradient(circle, rgba(126, 130, 224, 0.5) 0%, transparent 70%);
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle, rgba(126, 130, 224, 0.4) 0%, transparent 70%);
             top: 60%;
             right: 20%;
-            animation-duration: 22s;
-            animation-delay: 3s;
-        }
-
-        .orb-3 {
-            width: 180px;
-            height: 180px;
-            background: radial-gradient(circle, rgba(91, 95, 212, 0.4) 0%, transparent 70%);
-            bottom: 20%;
-            left: 50%;
-            animation-duration: 25s;
-            animation-delay: 6s;
+            animation-duration: 28s;
+            animation-delay: 5s;
         }
 
         @keyframes orb-float {
@@ -2083,6 +2015,171 @@
             75% {
                 transform: translate(40px, -40px) scale(1.1);
                 opacity: 0.7;
+            }
+        }
+
+        /* ===== ANIMATED RINGS ===== */
+        .rings-container {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .animated-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 3px solid;
+            opacity: 0;
+            animation: ring-expand 6s ease-out infinite;
+        }
+
+        .ring-1 {
+            width: 100px;
+            height: 100px;
+            border-color: rgba(240, 231, 72, 0.6);
+            top: 30%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+
+        .ring-2 {
+            width: 150px;
+            height: 150px;
+            border-color: rgba(126, 130, 224, 0.5);
+            top: 50%;
+            right: 25%;
+            animation-delay: 2s;
+        }
+
+        .ring-3 {
+            width: 120px;
+            height: 120px;
+            border-color: rgba(91, 95, 212, 0.6);
+            bottom: 30%;
+            left: 60%;
+            animation-delay: 4s;
+        }
+
+        @keyframes ring-expand {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(3) rotate(180deg);
+                opacity: 0;
+            }
+        }
+
+        /* ===== SPARKLES ===== */
+        .sparkles-container {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+                        0 0 20px rgba(240, 231, 72, 0.6);
+            animation: sparkle-twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes sparkle-twinkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* ===== FLOATING DOTS ===== */
+        .dots-container {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .floating-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, rgba(240, 231, 72, 0.8) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: dot-float 15s ease-in-out infinite;
+            box-shadow: 0 0 15px rgba(240, 231, 72, 0.6);
+        }
+
+        .dot-1 {
+            top: 20%;
+            left: 30%;
+            animation-duration: 12s;
+        }
+
+        .dot-2 {
+            top: 50%;
+            right: 20%;
+            animation-duration: 15s;
+            animation-delay: 2s;
+            background: radial-gradient(circle, rgba(126, 130, 224, 0.8) 0%, transparent 70%);
+            box-shadow: 0 0 15px rgba(126, 130, 224, 0.6);
+        }
+
+        .dot-3 {
+            bottom: 30%;
+            left: 15%;
+            animation-duration: 18s;
+            animation-delay: 4s;
+        }
+
+        .dot-4 {
+            top: 70%;
+            left: 70%;
+            animation-duration: 14s;
+            animation-delay: 1s;
+            background: radial-gradient(circle, rgba(91, 95, 212, 0.8) 0%, transparent 70%);
+            box-shadow: 0 0 15px rgba(91, 95, 212, 0.6);
+        }
+
+        .dot-5 {
+            top: 40%;
+            right: 40%;
+            animation-duration: 16s;
+            animation-delay: 3s;
+        }
+
+        @keyframes dot-float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.6;
+            }
+            25% {
+                transform: translate(30px, -30px) scale(1.5);
+                opacity: 1;
+            }
+            50% {
+                transform: translate(-20px, -50px) scale(0.8);
+                opacity: 0.4;
+            }
+            75% {
+                transform: translate(40px, -20px) scale(1.2);
+                opacity: 0.8;
             }
         }
     </style>
@@ -2265,7 +2362,7 @@
             </style>
 
             <!-- Download Proposal Button -->
-            <div class="mt-8" id="download-btn-container">
+            <div class="mt-8 mb-20 md:mb-8" id="download-btn-container">
                 <button onclick="downloadProposal()" class="download-proposal-btn">
                     <svg class="download-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -2391,13 +2488,77 @@
         </div>
     </div>
 
-    <!-- Scroll Indicator -->
+    <!-- Scroll Indicator with Enhanced Animation -->
     <div class="scroll-indicator-hero">
         <div class="scroll-mouse-hero">
             <div class="scroll-wheel-hero"></div>
         </div>
         <p class="scroll-text-hero">Scroll to explore</p>
+        <div class="scroll-arrows">
+            <span class="arrow-down"></span>
+            <span class="arrow-down"></span>
+            <span class="arrow-down"></span>
+        </div>
     </div>
+
+    <!-- Animated Wave at Bottom -->
+    <div class="wave-container">
+        <svg class="wave" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,0 C150,100 350,0 600,50 C850,100 1050,0 1200,50 L1200,120 L0,120 Z" class="wave-path wave-1"></path>
+            <path d="M0,20 C200,80 400,20 600,60 C800,100 1000,40 1200,80 L1200,120 L0,120 Z" class="wave-path wave-2"></path>
+            <path d="M0,40 C250,90 450,40 600,70 C750,100 950,60 1200,90 L1200,120 L0,120 Z" class="wave-path wave-3"></path>
+        </svg>
+    </div>
+
+    <style>
+        .wave-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 120px;
+            overflow: hidden;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .wave-path {
+            animation: wave-move 15s ease-in-out infinite;
+        }
+
+        .wave-1 {
+            fill: rgba(56, 60, 184, 0.3);
+            animation-duration: 12s;
+        }
+
+        .wave-2 {
+            fill: rgba(126, 130, 224, 0.2);
+            animation-duration: 15s;
+            animation-delay: 1s;
+        }
+
+        .wave-3 {
+            fill: rgba(240, 231, 72, 0.15);
+            animation-duration: 18s;
+            animation-delay: 2s;
+        }
+
+        @keyframes wave-move {
+            0%, 100% {
+                d: path("M0,0 C150,100 350,0 600,50 C850,100 1050,0 1200,50 L1200,120 L0,120 Z");
+            }
+            50% {
+                d: path("M0,50 C150,0 350,100 600,0 C850,0 1050,100 1200,50 L1200,120 L0,120 Z");
+            }
+        }
+    </style>
 
     <style>
         .scroll-indicator-hero {
@@ -2470,11 +2631,78 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            animation: text-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes text-pulse {
+            0%, 100% {
+                opacity: 0.8;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .scroll-arrows {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .arrow-down {
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid rgba(255, 255, 255, 0.6);
+            animation: arrow-bounce 2s ease-in-out infinite;
+        }
+
+        .arrow-down:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .arrow-down:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes arrow-bounce {
+            0%, 100% {
+                opacity: 0.3;
+                transform: translateY(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(5px);
+            }
         }
 
         @media (max-width: 768px) {
             .scroll-indicator-hero {
-                bottom: 20px;
+                bottom: 40px;
+                transform: translateX(-50%) scale(0.85);
+            }
+
+            .scroll-mouse-hero {
+                width: 24px;
+                height: 36px;
+            }
+
+            .scroll-text-hero {
+                font-size: 0.75rem;
+                letter-spacing: 1.5px;
+            }
+
+            .scroll-arrows {
+                gap: 3px;
+                margin-top: 6px;
+            }
+
+            .arrow-down {
+                border-left: 6px solid transparent;
+                border-right: 6px solid transparent;
+                border-top: 6px solid rgba(255, 255, 255, 0.6);
             }
         }
     </style>
@@ -2618,27 +2846,28 @@
 
 <!-- JavaScript -->
 <script>
-    // ===== PARTICLES ANIMATION (OPTIMIZED) =====
+    // ===== PARTICLES ANIMATION (HIGHLY OPTIMIZED) =====
     function createParticles() {
         const particlesContainer = document.getElementById('particles');
         if (!particlesContainer) return;
 
-        const particleCount = 20; // Reduced from 50 to 20
+        // Significantly reduce particles for better performance
+        const particleCount = window.innerWidth < 768 ? 5 : 12;
 
         for (let i = 0; i < particleCount; i++) {
             const particle = document.createElement('div');
             particle.className = 'particle';
 
             // Random size
-            const size = Math.random() * 3 + 2;
+            const size = Math.random() * 2 + 2;
             particle.style.width = `${size}px`;
             particle.style.height = `${size}px`;
 
             // Random horizontal position
             particle.style.left = `${Math.random() * 100}%`;
 
-            // Random animation duration
-            const duration = Math.random() * 8 + 20;
+            // Random animation duration (slower for less CPU usage)
+            const duration = Math.random() * 10 + 25;
             particle.style.animationDuration = `${duration}s`;
 
             // Random delay
@@ -2646,10 +2875,38 @@
             particle.style.animationDelay = `${delay}s`;
 
             // Random drift
-            const drift = (Math.random() - 0.5) * 150;
+            const drift = (Math.random() - 0.5) * 100;
             particle.style.setProperty('--drift', `${drift}px`);
 
             particlesContainer.appendChild(particle);
+        }
+    }
+
+    // ===== SPARKLES ANIMATION (OPTIMIZED) =====
+    function createSparkles() {
+        const sparklesContainer = document.getElementById('sparkles');
+        if (!sparklesContainer) return;
+
+        // Significantly reduce sparkles for performance
+        const sparkleCount = window.innerWidth < 768 ? 5 : 8;
+
+        for (let i = 0; i < sparkleCount; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+
+            // Random position
+            sparkle.style.top = `${Math.random() * 100}%`;
+            sparkle.style.left = `${Math.random() * 100}%`;
+
+            // Random animation delay
+            const delay = Math.random() * 3;
+            sparkle.style.animationDelay = `${delay}s`;
+
+            // Random animation duration
+            const duration = Math.random() * 2 + 3;
+            sparkle.style.animationDuration = `${duration}s`;
+
+            sparklesContainer.appendChild(sparkle);
         }
     }
 
@@ -3058,19 +3315,58 @@
         confettiParticles = [];
     }
 
-    // ===== Initialize New Features =====
+    // ===== Performance Optimization - Detect Low-End Devices =====
+    function isLowEndDevice() {
+        // Check for low-end device indicators
+        const isMobile = window.innerWidth < 768;
+        const hasLowMemory = navigator.deviceMemory && navigator.deviceMemory < 4;
+        const hasSlowConnection = navigator.connection &&
+            (navigator.connection.effectiveType === 'slow-2g' ||
+             navigator.connection.effectiveType === '2g' ||
+             navigator.connection.effectiveType === '3g');
+
+        return isMobile || hasLowMemory || hasSlowConnection;
+    }
+
+    // ===== Initialize New Features with Performance Checks =====
+    const lowEndDevice = isLowEndDevice();
+
+    // Reduce animations on low-end devices
+    if (lowEndDevice) {
+        console.log('Low-end device detected - reducing animations');
+        document.documentElement.style.setProperty('--animation-speed', '2');
+
+        // Hide some decorative elements
+        const sparkles = document.getElementById('sparkles');
+        const rings = document.querySelector('.rings-container');
+        if (sparkles) sparkles.style.display = 'none';
+        if (rings) rings.style.display = 'none';
+    }
+
     createParticles();
+    if (!lowEndDevice) {
+        createSparkles();
+    }
     handleNavbarScroll();
     setupMobileMenu();
 
-    // ===== Parallax Effect for Hero Elements (OPTIMIZED WITH THROTTLE) =====
+    // ===== Parallax Effect for Hero Elements (HIGHLY OPTIMIZED) =====
     function initParallax() {
         const heroSection = document.getElementById('hero-section');
         if (!heroSection) return;
 
+        // Disable parallax on low-end devices
+        if (lowEndDevice) return;
+
         let ticking = false;
+        let lastScrollTime = 0;
+        const throttleDelay = 100; // Only update every 100ms
 
         window.addEventListener('scroll', () => {
+            const now = Date.now();
+
+            if (now - lastScrollTime < throttleDelay) return;
+
             if (!ticking) {
                 window.requestAnimationFrame(() => {
                     const scrolled = window.pageYOffset;
@@ -3085,6 +3381,7 @@
                         }
                     }
 
+                    lastScrollTime = now;
                     ticking = false;
                 });
                 ticking = true;
@@ -3094,81 +3391,73 @@
 
     initParallax();
 
-    // ===== Interactive Mouse Movement Effect (OPTIMIZED - DESKTOP ONLY) =====
+    // ===== Interactive Mouse Movement Effect (DISABLED FOR PERFORMANCE) =====
+    // Disabled to improve performance
     function initMouseEffect() {
-        // Only enable on desktop
-        if (window.innerWidth < 768) return;
-
-        const heroSection = document.getElementById('hero-section');
-        if (!heroSection) return;
-
-        let ticking = false;
-
-        heroSection.addEventListener('mousemove', (e) => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    const { clientX, clientY } = e;
-                    const { innerWidth, innerHeight } = window;
-
-                    // Calculate mouse position as percentage
-                    const xPercent = (clientX / innerWidth - 0.5) * 2;
-                    const yPercent = (clientY / innerHeight - 0.5) * 2;
-
-                    // Move only blobs (removed shapes for performance)
-                    const blobs = document.querySelectorAll('.blob-shape');
-                    blobs.forEach((blob, index) => {
-                        const speed = 10 + (index * 3); // Further reduced speed
-                        const x = xPercent * speed;
-                        const y = yPercent * speed;
-                        blob.style.transform = `translate(${x}px, ${y}px)`;
-                    });
-
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        });
+        // Disabled for better performance
+        return;
     }
 
     initMouseEffect();
 
-    // ===== 3D Tilt Effect on Hero Title (OPTIMIZED - DESKTOP ONLY) =====
+    // ===== 3D Tilt Effect on Hero Title (DISABLED FOR PERFORMANCE) =====
     function init3DTilt() {
-        // Only enable on desktop
-        if (window.innerWidth < 768) return;
-
-        const heroTitle = document.getElementById('main-title');
-        if (!heroTitle) return;
-
-        let ticking = false;
-
-        heroTitle.addEventListener('mousemove', (e) => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    const rect = heroTitle.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-
-                    const rotateX = (y - centerY) / 30; // Further reduced intensity
-                    const rotateY = (centerX - x) / 30; // Further reduced intensity
-
-                    heroTitle.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        });
-
-        heroTitle.addEventListener('mouseleave', () => {
-            heroTitle.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
-        });
+        // Disabled for better performance
+        return;
     }
 
     init3DTilt();
+
+    // ===== Touch Ripple Effect for Mobile =====
+    function initTouchRipple() {
+        const heroSection = document.getElementById('hero-section');
+        if (!heroSection) return;
+
+        heroSection.addEventListener('touchstart', (e) => {
+            const touch = e.touches[0];
+            const ripple = document.createElement('div');
+            ripple.className = 'touch-ripple';
+            ripple.style.left = touch.clientX + 'px';
+            ripple.style.top = touch.clientY + 'px';
+            heroSection.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 1000);
+        });
+    }
+
+    // Add ripple styles
+    const rippleStyle = document.createElement('style');
+    rippleStyle.textContent = `
+        .touch-ripple {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(240, 231, 72, 0.6) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 9999;
+            animation: ripple-expand 1s ease-out forwards;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes ripple-expand {
+            0% {
+                width: 20px;
+                height: 20px;
+                opacity: 1;
+            }
+            100% {
+                width: 200px;
+                height: 200px;
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(rippleStyle);
+
+    initTouchRipple();
 
     // ===== Loader - Start Hero Animations (OPTIMIZED) =====
     setTimeout(() => {
@@ -3334,31 +3623,37 @@
         });
     }
 
-    // ===== Mobile Menu Toggle =====
+    // ===== Mobile Menu Toggle (Enhanced) =====
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
 
-    mobileMenuBtn.addEventListener('click', () => {
-        mobileMenu.classList.toggle('active');
+    if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
 
-        // Animate hamburger to X
-        const icon = mobileMenuBtn.querySelector('svg');
-        if (mobileMenu.classList.contains('active')) {
-            icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
-        } else {
-            icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
-        }
-    });
-
-    // Close mobile menu when clicking on a link
-    const mobileLinks = mobileMenu.querySelectorAll('a');
-    mobileLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            mobileMenu.classList.remove('active');
+            // Animate hamburger to X
             const icon = mobileMenuBtn.querySelector('svg');
-            icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
+            if (icon) {
+                if (mobileMenu.classList.contains('active')) {
+                    icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
+                } else {
+                    icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
+                }
+            }
         });
-    });
+
+        // Close mobile menu when clicking on a link
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                const icon = mobileMenuBtn.querySelector('svg');
+                if (icon) {
+                    icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
+                }
+            });
+        });
+    }
 </script>
 </body>
 </html>

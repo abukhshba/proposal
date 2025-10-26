@@ -8,6 +8,11 @@
             scroll-behavior: smooth;
         }
 
+        /* Disable smooth scroll on Android for performance */
+        html.android-device {
+            scroll-behavior: auto !important;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
@@ -82,19 +87,18 @@
             background: linear-gradient(135deg, #383cb8 0%, #f0e748 100%);
         }
 
-        /* ===== ANDROID DEVICE OPTIMIZATIONS - ULTRA AGGRESSIVE ===== */
-        /* These optimizations ensure excellent performance on Samsung, Oppo, and all Android devices */
+        /* ===== EXTREME ANDROID OPTIMIZATIONS ===== */
 
-        /* Force simple rendering on Android */
+        /* Force fastest rendering */
         html.android-device,
         body.android-device {
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeSpeed !important;
             image-rendering: -webkit-optimize-contrast !important;
+            overflow-x: hidden !important;
         }
 
-        /* Hide ALL decorative elements */
+        /* Hide ALL decorative elements and containers */
         body.android-device .blob-shape,
         body.android-device .orb,
         body.android-device .light-ray,
@@ -105,13 +109,22 @@
         body.android-device .particle,
         body.android-device .floating-badges,
         body.android-device .connection-lines,
-        body.android-device .pulsing-circles {
+        body.android-device .pulsing-circles,
+        body.android-device .shapes-container,
+        body.android-device .light-rays,
+        body.android-device .orbs-container,
+        body.android-device .sparkles-container,
+        body.android-device .dots-container,
+        body.android-device .particles-container,
+        body.android-device .hero-bg-gradient,
+        body.android-device .wave-container {
             display: none !important;
+            visibility: hidden !important;
         }
 
-        /* Remove ALL animations, effects, shadows on Android for maximum performance */
-        body.android-device *,
-        html.android-device * {
+        /* Remove ALL visual effects - EXTREME MODE */
+        html.android-device *,
+        body.android-device * {
             animation: none !important;
             transition: none !important;
             backdrop-filter: none !important;
@@ -123,26 +136,36 @@
             will-change: auto !important;
             perspective: none !important;
             transform-style: flat !important;
+            background-attachment: scroll !important;
         }
 
-        /* Static gradient on Android - no animation */
+        /* SOLID COLOR ONLY - fastest possible */
         body.android-device .hero-navbar-merged,
         body.android-device #hero-section {
-            background: linear-gradient(135deg, #383cb8 0%, #f0e748 100%) !important;
+            background: #383cb8 !important;
+            background-image: none !important;
         }
 
-        /* Simplify all cards on Android */
+        /* Simplify all cards */
         body.android-device .proposal-card,
         body.android-device .skill-card,
         body.android-device .service-card {
-            transform: none !important;
-            transition: none !important;
+            background: white !important;
+            border: 1px solid #e5e7eb !important;
         }
 
-        /* Remove all pseudo-elements on Android */
+        /* Remove all pseudo-elements */
         body.android-device *::before,
         body.android-device *::after {
             display: none !important;
+            content: none !important;
+        }
+
+        /* Remove hover effects */
+        body.android-device *:hover,
+        body.android-device *:active {
+            transform: none !important;
+            box-shadow: none !important;
         }
 
         /* Keep loader visible on Android - it needs animations */

@@ -24,31 +24,39 @@
         console.log('🤖 Android detected - Applying CSS optimizations immediately');
     }
 
-    // ===== ULTRA AGGRESSIVE ANDROID OPTIMIZATIONS =====
+    // ===== EXTREME ANDROID OPTIMIZATIONS =====
     function applyAndroidOptimizations() {
         if (!isAndroidDevice()) return;
 
-        console.log('🤖 Android device detected - Applying ULTRA aggressive optimizations...');
+        console.log('🤖 Android device detected - Applying EXTREME optimizations...');
 
-        // Add Android-specific class for CSS optimizations
+        // Add Android-specific class
         document.body.classList.add('android-device');
+        document.documentElement.classList.add('android-device');
 
-        // REMOVE ALL HEAVY ELEMENTS on Android (except loader)
-        const heavyElements = document.querySelectorAll('.blob-shape, .orb, .light-ray, .sparkle, .animated-ring, .floating-dot, .floating-shape, .particle, .floating-badges, .connection-lines, .pulsing-circles');
-        heavyElements.forEach(el => {
-            el.remove(); // Remove from DOM completely
+        // REMOVE ALL decorative containers completely
+        const containersToRemove = [
+            '.blob-shape', '.orb', '.light-ray', '.sparkle', '.animated-ring',
+            '.floating-dot', '.floating-shape', '.particle', '.floating-badges',
+            '.connection-lines', '.pulsing-circles', '.shapes-container',
+            '.light-rays', '.orbs-container', '.sparkles-container', '.dots-container',
+            '.particles-container', '.hero-bg-gradient', '.wave-container'
+        ];
+
+        containersToRemove.forEach(selector => {
+            document.querySelectorAll(selector).forEach(el => el.remove());
         });
 
-        // Simplify gradient - use SIMPLE STATIC gradient on Android
+        // Simplify hero - SOLID COLOR ONLY
         const heroSection = document.getElementById('hero-section');
         if (heroSection) {
             heroSection.style.animation = 'none';
-            heroSection.style.background = 'linear-gradient(135deg, #383cb8 0%, #f0e748 100%)';
+            heroSection.style.background = '#383cb8';
+            heroSection.style.backgroundImage = 'none';
         }
 
-        // Remove ALL animations, transitions, filters, shadows from ALL elements (except loader)
+        // Remove ALL effects from ALL elements
         document.querySelectorAll('*').forEach(el => {
-            // Skip loader elements - they need animations
             if (el.closest('.loader-wrapper') || el.classList.contains('loader-wrapper')) {
                 return;
             }
@@ -61,19 +69,39 @@
             el.style.boxShadow = 'none';
             el.style.textShadow = 'none';
             el.style.transform = 'none';
+            el.style.willChange = 'auto';
         });
 
-        // Disable all pseudo-elements (::before, ::after)
+        // Inject extreme CSS
         const style = document.createElement('style');
         style.innerHTML = `
+            html.android-device *, body.android-device * {
+                animation: none !important;
+                transition: none !important;
+                transform: none !important;
+                filter: none !important;
+                backdrop-filter: none !important;
+                box-shadow: none !important;
+                text-shadow: none !important;
+                will-change: auto !important;
+            }
             body.android-device *::before,
             body.android-device *::after {
                 display: none !important;
             }
+            body.android-device #hero-section {
+                background: #383cb8 !important;
+            }
+            body.android-device .loader-wrapper,
+            body.android-device .loader-wrapper * {
+                animation: revert !important;
+                filter: revert !important;
+                transform: revert !important;
+            }
         `;
         document.head.appendChild(style);
 
-        console.log('✅ ULTRA Android optimizations applied - Maximum performance mode!');
+        console.log('✅ EXTREME Android optimizations applied!');
     }
 
     // ===== REAL-TIME PERFORMANCE MONITORING =====

@@ -251,6 +251,24 @@
                 loader.style.visibility = 'hidden';
                 setTimeout(function() {
                     loader.style.display = 'none';
+
+                    // CRITICAL: Ensure hero content is visible immediately after loader
+                    const heroElements = [
+                        document.querySelector('.word-website'),
+                        document.querySelector('.word-proposal'),
+                        document.getElementById('animated-subtitle'),
+                        document.getElementById('download-btn-container')
+                    ];
+
+                    heroElements.forEach(function(el) {
+                        if (el) {
+                            el.style.opacity = '1';
+                            el.style.visibility = 'visible';
+                            el.style.transform = 'none';
+                        }
+                    });
+
+                    console.log('✅ Hero content forced visible');
                 }, 800);
             }, loaderTime);
         }

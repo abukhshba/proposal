@@ -85,6 +85,36 @@
         /* ===== UNIVERSAL OPTIMIZATIONS (Works on ALL devices) ===== */
         /* No device-specific hacks - site works the same everywhere */
 
+        /* ===== CRITICAL FIX: Ensure content is ALWAYS visible on mobile ===== */
+        @media (max-width: 768px) {
+            /* Override initial opacity - start visible on mobile */
+            .word-website,
+            .word-proposal {
+                opacity: 1 !important;
+                transform: scale(1) !important;
+                filter: none !important;
+            }
+
+            #animated-subtitle {
+                opacity: 1 !important;
+                transform: translateY(0) !important;
+            }
+
+            #download-btn-container {
+                opacity: 1 !important;
+                transform: translateY(0) !important;
+            }
+
+            /* Simplify animations on mobile - just keep gradient flow */
+            .word-website {
+                animation: gradient-flow 4s ease infinite !important;
+            }
+
+            .word-proposal {
+                animation: gradient-flow 4s ease infinite !important;
+            }
+        }
+
         /* ===== EMERGENCY MODE - For extremely low-end devices ===== */
         body.emergency-mode * {
             animation: none !important;
